@@ -16,7 +16,6 @@ const DiagramObject = ({definition, height, instance}) => {
     const dy = location.y;
     const points = definition.points.map(([x, y]) =>
       [x + dx, height - (y + dy)]);
-    console.log('diagram-object.js x: points =', points);
     const [centerX, centerY] = getCenter(points);
     const transform = rotate ? `rotate(${rotate}, ${centerX}, ${centerY})` : '';
 

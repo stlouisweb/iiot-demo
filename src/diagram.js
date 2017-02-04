@@ -14,7 +14,7 @@ class Diagram extends Component {
     })
   };
 
-  componentDidUpdate() {
+  componentDidMount() {
     const svg = document.querySelector('.diagram');
     if (svg) svgPanZoom(svg, {controlIconsEnabled: true});
   }
