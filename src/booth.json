@@ -88,6 +88,12 @@
       "id": 8,
       "defId": "logo",
       "location": {"x": 72, "y": 75}
+    },
+    {
+      "id": 9,
+      "defId": "manifold",
+      "location": {"x": 72, "y": 75},
+      "valveCount": 6
     }
   ]
 }

@@ -1,13 +1,55 @@
 import React, {PropTypes as t} from 'react';
 import {getCenter} from './polygons';
+import mapN from './map-n';
+import {valveHasFault} from './faults';
+console.log('diagram-object.js x: valveHasFault =', valveHasFault);
 
-const polygonStyle = {
-  fill: 'white', // 'none',
-  stroke: 'blue',
-  strokeWidth: 2
-};
+const VALVE_HEIGHT = 18; //25;
+const VALVE_SPACING = 3;
+const VALVE_WIDTH = 5; //7;
 
-const DiagramObject = ({definition, height, instance}) => {
+function getManifold(manifoldId, location, valveCount, manifolds, filter) {
+  const manifold = manifolds[manifoldId];
+
+  const dx = location.x;
+  const dy = location.y;
+
+  return (
+    <g className="manifold">
+      {
+        mapN(valveCount, index => {
+          const valveDx = index * (VALVE_WIDTH + VALVE_SPACING);
+          const startX = dx + valveDx;
+          const points = [
+            [startX, dy],
+            [startX, dy + VALVE_HEIGHT],
+            [startX + VALVE_WIDTH, dy + VALVE_HEIGHT],
+            [startX + VALVE_WIDTH, dy],
+          ];
+          const id = `manifold${manifoldId}-valve${index + 1}`;
+
+          const valve = manifold && manifold[index];
+          const cssClass = valveHasFault(filter, valve) ? 'alert' : '';
+          return (
+            <polygon
+              className={`valve ${cssClass}`}
+              id={id}
+              key={id}
+              points={points}
+            />
+          );
+        })
+      }
+    </g>
+  );
+}
+
+const DiagramObject = ({definition, filter, height, instance, manifolds}) => {
+  if (instance.defId === 'manifold') {
+    const {id, location, valveCount} = instance;
+    return getManifold(id, location, valveCount, manifolds, filter);
+  }
+
   const {type} = definition;
 
   if (type === 'polygon') {
@@ -22,8 +64,8 @@ const DiagramObject = ({definition, height, instance}) => {
     return (
       <g>
         <polygon
+          className="polygon"
           points={points}
-          style={polygonStyle}
           transform={transform}
           vectorEffect="non-scaling-stroke"
         />
@@ -34,9 +76,9 @@ const DiagramObject = ({definition, height, instance}) => {
     const {location} = instance;
     const {x, y} = location;
     return <image href={ref} x={x} y={y} height={height} width={width}/>;
-  } else {
-    return <text>unsupported type {type}</text>;
   }
+
+  return <text>unsupported type {type}</text>;
 };
 
 export const instancePropType = t.shape({
@@ -54,8 +96,10 @@ DiagramObject.propTypes = {
     type: t.string.isRequired,
     width: t.number
   }),
+  filter: t.string,
   height: t.number,
-  instance: instancePropType
+  instance: instancePropType,
+  manifolds: t.object
 };
 
 export default DiagramObject;

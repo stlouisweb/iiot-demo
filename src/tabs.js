@@ -1,29 +1,36 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes as t} from 'react';
 import Diagram from './diagram';
 import Filters from './filters';
 
 import boothShapes from './booth.json';
 
 class Tabs extends Component {
-  state = {
-    selectedTab: 'department'
+  static propTypes = {
+    filter: t.string.isRequired,
+    manifolds: t.object.isRequired,
+    selectedTab: t.string.isRequired
   };
 
-  getBtnClass = id => this.state.selectedTab === id ? 'selected' : '';
+  getBtnClass = id => this.props.selectedTab === id ? 'depressed-btn' : '';
 
   getContent = () => {
-    const {selectedTab} = this.state;
+    const {filter, manifolds, selectedTab} = this.props;
     return selectedTab === 'facility' ?
       <div>The facility view is coming soon!</div> :
       selectedTab === 'department' ?
       [
-        <Diagram key="diagram" shapes={boothShapes}/>,
-        <Filters key="filters"/>
+        <Diagram
+          filter={filter}
+          key="diagram"
+          manifolds={manifolds}
+          shapes={boothShapes}
+        />,
+        <Filters key="filters" filter={filter} manifolds={manifolds}/>
       ] :
       <div>invalid tab</div>;
   };
 
-  onClick = event => this.setState({selectedTab: event.target.id});
+  onClick = event => React.setState({selectedTab: event.target.id});
 
   render() {
     return (
