@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Tabs from './tabs';
-//import './bootstrap.min.css';
 import './App.css';
 
 class App extends Component {

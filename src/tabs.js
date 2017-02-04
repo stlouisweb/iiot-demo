@@ -1,6 +1,8 @@
 import React from 'react';
 import {Col, Nav, NavItem, Row, Tab} from 'react-bootstrap';
 import Diagram from './diagram';
+import Filters from './filters';
+
 import boothShapes from './booth.json';
 
 const Tabs = () =>
@@ -19,10 +21,11 @@ const Tabs = () =>
       <Col sm={10}>
         <Tab.Content animation>
           <Tab.Pane eventKey="facility">
-            Facility content
+            Facility content goes here!
           </Tab.Pane>
           <Tab.Pane eventKey="department">
             <Diagram shapes={boothShapes}/>
+            <Filters/>
           </Tab.Pane>
         </Tab.Content>
       </Col>

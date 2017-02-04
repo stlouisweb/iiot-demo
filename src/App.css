@@ -6,3 +6,26 @@
   width: 800px;
 }
 
+.filter-btn {
+  background-image: linear-gradient(0, #86a73f, #a9d451);
+  /*
+  border-color: #5D7038;
+  border-top-color: #FCFF9E;
+  */
+  border-radius: 10px;
+  border-width: 3px;
+  box-shadow: 3px 3px 3px lightgray;
+  color: white;
+  display: block;
+  font-size: 18px;
+  height: 74px;
+  margin: 15px 5px;
+  padding: 10px;
+  width: 100px;
+}
+
+.filter-btn.fault {
+  background-image: linear-gradient(0, #9B3B38, #DD4744);
+  border-radius: 6px;
+  display: block;
+}
