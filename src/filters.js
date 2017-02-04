@@ -17,18 +17,21 @@ class Filters extends Component {
 
   onClick = event => {
     const {id} = event.target;
-    console.log('filters.js onClick: id =', id);
     React.setState({filter: id});
   };
 
-  onCyclesChange = event => {
-    const cycleLimit = event.target.value;
+  onLimitChange = (event, limitName) => {
+    const {value} = event.target;
     React.setState(state => {
       const {limits} = state;
-      limits.cycles = cycleLimit;
+      limits[limitName] = value;
       return {limits};
     });
   };
+
+  onCyclesChange = event => this.onLimitChange(event, 'cycles');
+  onPressureMinChange = event => this.onLimitChange(event, 'pressureMin');
+  onPressureMaxChange = event => this.onLimitChange(event, 'pressureMax');
 
   render() {
     const {limits} = this.props;
@@ -42,6 +45,7 @@ class Filters extends Component {
         >
           Leak Fault
         </button>
+
         <button
           className={`toggle-btn ${this.cssClasses('valve-fault')}`}
           id="valve-fault"
@@ -49,14 +53,34 @@ class Filters extends Component {
         >
           Valve Fault
         </button>
-        <button
-          className={`toggle-btn ${this.cssClasses('pressure-fault')}`}
-          id="pressure-fault"
-          onClick={this.onClick}
-        >
-          Pressure Fault
-        </button>
-        <div>
+
+        <div className="filter-row">
+          <button
+            className={`toggle-btn ${this.cssClasses('pressure-fault')}`}
+            id="pressure-fault"
+            onClick={this.onClick}
+          >
+            Pressure Fault
+          </button>
+          <div>
+            <label>Min:</label>
+            <input
+              className="form-control number-input"
+              type="number"
+              onChange={this.onPressureMinChange}
+              value={limits.pressureMin}
+            />
+            <br/>
+            <label>Max:</label>
+            <input
+              className="form-control number-input"
+              type="number"
+              onChange={this.onPressureMaxChange}
+              value={limits.pressureMax}
+            />
+          </div>
+        </div>
+        <div className="filter-row">
           <button
             className={`toggle-btn ${this.cssClasses('lifecycle')}`}
             id="lifecycle"
@@ -66,8 +90,7 @@ class Filters extends Component {
           </button>
           <label>Cycles:</label>
           <input
-            className="form-control"
-            id="cyclesInput"
+            className="form-control number-input"
             type="number"
             onChange={this.onCyclesChange}
             value={limits.cycles}

@@ -10,8 +10,10 @@ export function manifoldHasFault(limits, faultType, manifold) {
 export function valveHasFault(limits, faultType, valve) {
   return !valve ? false :
     faultType === 'leak-fault' ? valve.leak :
-    faultType === 'valve-fault' ? valve.fault :
-    faultType === 'pressure-fault' ? valve.pressure > limits.pressure :
     faultType === 'lifecycle' ? valve.cycles > limits.cycles :
+    faultType === 'pressure-fault' ?
+      valve.pressure < limits.pressureMin ||
+      valve.pressure > limits.pressureMax :
+    faultType === 'valve-fault' ? valve.fault :
     false;
 }

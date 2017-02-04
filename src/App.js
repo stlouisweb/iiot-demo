@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       limits: {
         cycles: 1000,
-        pressure: 500 //TODO: Need a way to change this?
+        pressureMin: 500,
+        pressureMax: 1000
       },
       filter: 'leak-fault',
       manifolds: {},
@@ -21,34 +22,34 @@ class App extends Component {
 
   componentDidMount() {
     this.updateValve(9, 0, {
-      cycles: 100,
+      cycles: 1000,
       fault: false,
       leak: false,
-      pressure: 0
+      pressure: 400
     });
     this.updateValve(9, 1, {
-      cycles: 90,
+      cycles: 999,
       fault: true,
       leak: false,
-      pressure: 0
+      pressure: 600
     });
     this.updateValve(9, 2, {
-      cycles: 80,
+      cycles: 998,
       fault: false,
       leak: true,
-      pressure: 0
+      pressure: 900
     });
     this.updateValve(9, 3, {
-      cycles: 70,
+      cycles: 997,
       fault: false,
       leak: false,
-      pressure: 101
+      pressure: 1001
     });
     this.updateValve(9, 4, {
       cycles: 0,
       fault: false,
       leak: false,
-      pressure: 501
+      pressure: 0
     });
   }
 
