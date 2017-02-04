@@ -9,13 +9,14 @@ class Tabs extends Component {
     filter: t.string.isRequired,
     limits: t.object.isRequired,
     manifolds: t.object.isRequired,
-    selectedTab: t.string.isRequired
+    selectedTab: t.string.isRequired,
+    selectedValve: t.object
   };
 
   getBtnClass = id => this.props.selectedTab === id ? 'depressed-btn' : '';
 
   getContent = () => {
-    const {filter, limits, manifolds, selectedTab} = this.props;
+    const {filter, limits, manifolds, selectedTab, selectedValve} = this.props;
     return selectedTab === 'facility' ?
       <div>The facility view is coming soon!</div> :
       selectedTab === 'department' ?
@@ -25,6 +26,7 @@ class Tabs extends Component {
           key="diagram"
           limits={limits}
           manifolds={manifolds}
+          selectedValve={selectedValve}
           shapes={boothShapes}
         />,
         <Filters

@@ -71,6 +71,7 @@ class DiagramObject extends Component {
                 className={`valve ${cssClass}`}
                 id={valveId}
                 key={valveId}
+                onClick={this.onValveClick}
                 points={valvePolygons[index]}
               />
             );
@@ -108,6 +109,18 @@ class DiagramObject extends Component {
         }
       </text>
     );
+  };
+
+  onValveClick = event => {
+    const {id} = event.target;
+    const match = /^manifold(\d+)-valve(\d+)$/.exec(id);
+    const [, manifoldId, valveId] = match;
+
+    const {manifolds} = this.props;
+    const manifold = manifolds[manifoldId];
+    const valve = manifold[valveId];
+    console.log('diagram-object.js onValveClick: valve =', valve);
+    React.setState({selectedValve: valve});
   };
 
   render() {

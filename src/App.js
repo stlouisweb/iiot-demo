@@ -16,7 +16,8 @@ class App extends Component {
       },
       filter: 'leak-fault',
       manifolds: {},
-      selectedTab: 'department'
+      selectedTab: 'department',
+      selectedValve: null
     };
   }
 
@@ -64,7 +65,9 @@ class App extends Component {
   }
 
   render() {
-    const {filter, limits, manifolds, selectedTab} = this.state;
+    const {
+      filter, limits, manifolds, selectedTab, selectedValve
+    } = this.state;
     return (
       <div className="App">
         <Tabs
@@ -72,6 +75,7 @@ class App extends Component {
           limits={limits}
           manifolds={manifolds}
           selectedTab={selectedTab}
+          selectedValve={selectedValve}
         />
       </div>
     );
