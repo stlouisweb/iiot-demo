@@ -17,8 +17,6 @@ const DiagramObject = ({definition, height, instance}) => {
       [x + dx, height - (y + dy)]);
     console.log('diagram-object.js x: points =', points);
     const [centerX, centerY] = getCenter(points);
-    console.log('diagram-object.js x: centerX =', centerX);
-    console.log('diagram-object.js x: centerY =', centerY);
     const transform = rotate ? `rotate(${rotate}, ${centerX}, ${centerY})` : '';
 
     return (
@@ -27,6 +25,7 @@ const DiagramObject = ({definition, height, instance}) => {
           points={points}
           style={polygonStyle}
           transform={transform}
+          vectorEffect="non-scaling-stroke"
         />
       </g>
     );
