@@ -118,23 +118,23 @@
     {
       "id": 13,
       "text": "Smart Factory Zone",
-      "location": {"x": 4, "y": -7}
+      "location": {"x": 30, "y": -4}
     },
     {
       "id": 14,
       "text": "Smart Machines Zone",
-      "location": {"x": 145, "y": -7}
+      "location": {"x": 174, "y": -4}
     },
     {
       "id": 15,
       "text": "Energy Efficiency\nBi-directional Actuation Zone",
-      "location": {"x": 40, "y": 140},
+      "location": {"x": 43, "y": 139},
       "rotate": -45
     },
     {
       "id": 16,
       "text": "Energy Efficiency\nUnidirectional Actuation Zone",
-      "location": {"x": 80, "y": 140},
+      "location": {"x": 161, "y": 139},
       "rotate": 45
     }
   ]

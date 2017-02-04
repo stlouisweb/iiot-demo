@@ -80,32 +80,43 @@ class DiagramObject extends Component {
     );
   }
 
+  /**
+   * The location for text should be its center.
+   * This makes rotation work as expected.
+   */
+  getText = () => {
+    const {height, instance} = this.props;
+    const {rotate, location, text} = instance;
+    const pieces = text.split('\n');
+    const {x, y} = location;
+    const yFlipped = height - y;
+    return (
+      <text
+        className="diagram-text"
+        dominantBaseline="central"
+        textAnchor="middle"
+        transform={getTransform(rotate, x, yFlipped)}
+        x={x}
+        y={yFlipped}
+      >
+        {
+          /* eslint-disable react/no-array-index-key */
+          pieces.map((piece, index) =>
+            <tspan key={index} x={location.x} dy={index * 7}>
+              {piece}
+            </tspan>)
+        }
+      </text>
+    );
+  };
+
   render() {
     const {definition, height, instance} = this.props;
     const {defId, text} = instance;
 
     if (defId === 'manifold') return this.getManifold();
 
-    if (text) {
-      const {rotate, location} = instance;
-      const pieces = text.split('\n');
-      return (
-        <text
-          className="diagram-text"
-          transform={getTransform(rotate, location.x, location.y)}
-          x={location.x}
-          y={height - location.y}
-        >
-          {
-            /* eslint-disable react/no-array-index-key */
-            pieces.map((piece, index) =>
-              <tspan key={index} x={location.x} dy={index * 7}>
-                {piece}
-              </tspan>)
-          }
-        </text>
-      );
-    }
+    if (text) return this.getText();
 
     const {type} = definition;
 
