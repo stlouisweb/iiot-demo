@@ -4,9 +4,9 @@
   "definitions": {
     "logo": {
       "type": "image",
-      "height": 100,
-      "width": 200,
-      "ref": "nexmatix.png"
+      "height": 33,
+      "width": 62,
+      "ref": "images/logo.png"
     },
     "booth": {
       "type": "polygon",
@@ -83,6 +83,11 @@
       "id": 7,
       "defId": "bench3",
       "location": {"x": 144, "y": 0}
+    },
+    {
+      "id": 8,
+      "defId": "logo",
+      "location": {"x": 72, "y": 75}
     }
   ]
 }

@@ -9,6 +9,7 @@ const polygonStyle = {
 
 const DiagramObject = ({definition, height, instance}) => {
   const {type} = definition;
+
   if (type === 'polygon') {
     const {location, rotate} = instance;
     const dx = location.x;
@@ -29,9 +30,14 @@ const DiagramObject = ({definition, height, instance}) => {
         />
       </g>
     );
+  } else if (type === 'image') {
+    const {height, ref, width} = definition;
+    const {location} = instance;
+    const {x, y} = location;
+    return <image href={ref} x={x} y={y} height={height} width={width}/>;
+  } else {
+    return <text>unsupported type {type}</text>;
   }
-
-  return <text>unsupported type {type}</text>;
 };
 
 export const instancePropType = t.shape({
