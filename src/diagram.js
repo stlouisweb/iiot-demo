@@ -7,7 +7,8 @@ const PADDING = 10;
 
 class Diagram extends Component {
   static propTypes = {
-    filter: t.string,
+    filter: t.string.isRequired,
+    limits: t.object.isRequired,
     manifolds: t.object,
     shapes: t.shape({
       definitions: t.object,
@@ -42,7 +43,7 @@ class Diagram extends Component {
   }
 
   render() {
-    const {filter, manifolds, shapes} = this.props;
+    const {filter, limits, manifolds, shapes} = this.props;
     const {definitions, height, instances, width} = shapes;
     const viewBox =
       `${-PADDING} ${-PADDING} ${width + PADDING} ${height + PADDING}`;
@@ -59,6 +60,7 @@ class Diagram extends Component {
                 height={height}
                 instance={instance}
                 key={instance.id}
+                limits={limits}
                 manifolds={manifolds}
               />
             );

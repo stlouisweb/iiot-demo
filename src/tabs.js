@@ -7,6 +7,7 @@ import boothShapes from './booth.json';
 class Tabs extends Component {
   static propTypes = {
     filter: t.string.isRequired,
+    limits: t.object.isRequired,
     manifolds: t.object.isRequired,
     selectedTab: t.string.isRequired
   };
@@ -14,7 +15,7 @@ class Tabs extends Component {
   getBtnClass = id => this.props.selectedTab === id ? 'depressed-btn' : '';
 
   getContent = () => {
-    const {filter, manifolds, selectedTab} = this.props;
+    const {filter, limits, manifolds, selectedTab} = this.props;
     return selectedTab === 'facility' ?
       <div>The facility view is coming soon!</div> :
       selectedTab === 'department' ?
@@ -22,10 +23,16 @@ class Tabs extends Component {
         <Diagram
           filter={filter}
           key="diagram"
+          limits={limits}
           manifolds={manifolds}
           shapes={boothShapes}
         />,
-        <Filters key="filters" filter={filter} manifolds={manifolds}/>
+        <Filters
+          key="filters"
+          filter={filter}
+          limits={limits}
+          manifolds={manifolds}
+        />
       ] :
       <div>invalid tab</div>;
   };

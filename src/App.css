@@ -2,6 +2,12 @@
   padding: 20px;
 }
 
+#cyclesInput {
+  display: inline-block;
+  margin-left: 5px;
+  width: 85px;
+}
+
 .diagram {
   outline: solid lightgray 1px;
   height: 100%;

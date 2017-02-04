@@ -1,17 +1,17 @@
-export function anyHasFault(faultType, manifolds) {
+export function anyHasFault(limits, faultType, manifolds) {
   return Object.keys(manifolds).some(
-    id => manifoldHasFault(faultType, manifolds[id]));
+    id => manifoldHasFault(limits, faultType, manifolds[id]));
 }
 
-export function manifoldHasFault(faultType, manifold) {
-  return manifold.some(valve => valveHasFault(faultType, valve));
+export function manifoldHasFault(limits, faultType, manifold) {
+  return manifold.some(valve => valveHasFault(limits, faultType, valve));
 }
 
-export function valveHasFault(faultType, valve) {
+export function valveHasFault(limits, faultType, valve) {
   return !valve ? false :
     faultType === 'leak-fault' ? valve.leak :
     faultType === 'valve-fault' ? valve.fault :
-    faultType === 'pressure-fault' ? valve.pressure > 100 : //TODO: FIX ME
-    faultType === 'lifecycle' ? valve.cycles > 100 : //TODO: FIX ME
+    faultType === 'pressure-fault' ? valve.pressure > limits.pressure :
+    faultType === 'lifecycle' ? valve.cycles > limits.cycles :
     false;
 }

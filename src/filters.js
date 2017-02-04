@@ -4,13 +4,14 @@ import {anyHasFault} from './faults';
 class Filters extends Component {
   static propTypes = {
     filter: t.string,
+    limits: t.object,
     manifolds: t.object
   };
 
   cssClasses = thisFilter => {
-    const {filter, manifolds} = this.props;
+    const {filter, limits, manifolds} = this.props;
     const c1 = thisFilter === filter ? 'depressed-btn' : '';
-    const c2 = anyHasFault(thisFilter, manifolds) ? 'alert' : '';
+    const c2 = anyHasFault(limits, thisFilter, manifolds) ? 'alert' : '';
     return `${c1} ${c2}`;
   }
 
@@ -20,7 +21,18 @@ class Filters extends Component {
     React.setState({filter: id});
   };
 
+  onCyclesChange = event => {
+    const cycleLimit = event.target.value;
+    React.setState(state => {
+      const {limits} = state;
+      limits.cycles = cycleLimit;
+      return {limits};
+    });
+  };
+
   render() {
+    const {limits} = this.props;
+
     return (
       <div className="filters">
         <button
@@ -44,13 +56,23 @@ class Filters extends Component {
         >
           Pressure Fault
         </button>
-        <button
-          className={`toggle-btn ${this.cssClasses('lifecycle')}`}
-          id="lifecycle"
-          onClick={this.onClick}
-        >
-          Lifecycle
-        </button>
+        <div>
+          <button
+            className={`toggle-btn ${this.cssClasses('lifecycle')}`}
+            id="lifecycle"
+            onClick={this.onClick}
+          >
+            Lifecycle
+          </button>
+          <label>Cycles:</label>
+          <input
+            className="form-control"
+            id="cyclesInput"
+            type="number"
+            onChange={this.onCyclesChange}
+            value={limits.cycles}
+          />
+        </div>
       </div>
     );
   }

@@ -1,5 +1,7 @@
 import React, {Component, PropTypes as t} from 'react';
-import {getCenter, getCenterOfMany, getRectangle, getTransform} from './polygons';
+import {
+  getCenter, getCenterOfMany, getRectangle, getTransform
+} from './polygons';
 import mapN from './map-n';
 import {valveHasFault} from './faults';
 
@@ -28,11 +30,12 @@ class DiagramObject extends Component {
     filter: t.string,
     height: t.number,
     instance: instancePropType,
+    limits: t.object.isRequired,
     manifolds: t.object
   };
 
   getManifold = () => {
-    const {filter, height, instance, manifolds} = this.props;
+    const {filter, height, instance, limits, manifolds} = this.props;
     const {id, location, rotate, valveCount} = instance;
     const manifold = manifolds[id];
 
@@ -60,7 +63,8 @@ class DiagramObject extends Component {
             const valveId = `manifold${id}-valve${index + 1}`;
 
             const valve = manifold && manifold[index];
-            const cssClass = valveHasFault(filter, valve) ? 'alert' : '';
+            const cssClass =
+              valveHasFault(limits, filter, valve) ? 'alert' : '';
 
             return (
               <polygon
@@ -85,7 +89,6 @@ class DiagramObject extends Component {
     if (text) {
       const {rotate, location} = instance;
       const pieces = text.split('\n');
-      console.log('diagram-object.js render: pieces =', pieces);
       return (
         <text
           className="diagram-text"
