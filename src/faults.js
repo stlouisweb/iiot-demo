@@ -8,8 +8,6 @@ export function manifoldHasFault(faultType, manifold) {
 }
 
 export function valveHasFault(faultType, valve) {
-  console.log('fault.js valveHasFault: faultType =', faultType);
-  console.log('fault.js valveHasFault: valve =', valve);
   return !valve ? false :
     faultType === 'leak-fault' ? valve.leak :
     faultType === 'valve-fault' ? valve.fault :

@@ -92,8 +92,50 @@
     {
       "id": 9,
       "defId": "manifold",
-      "location": {"x": 72, "y": 75},
+      "location": {"x": 8, "y": 6},
       "valveCount": 6
+    },
+    {
+      "id": 10,
+      "defId": "manifold",
+      "location": {"x": 152, "y": 6},
+      "valveCount": 6
+    },
+    {
+      "id": 11,
+      "defId": "manifold",
+      "location": {"x": 27, "y": 144},
+      "rotate": -45,
+      "valveCount": 1
+    },
+    {
+      "id": 12,
+      "defId": "manifold",
+      "location": {"x": 169, "y": 145},
+      "rotate": 45,
+      "valveCount": 2
+    },
+    {
+      "id": 13,
+      "text": "Smart Factory Zone",
+      "location": {"x": 4, "y": -7}
+    },
+    {
+      "id": 14,
+      "text": "Smart Machines Zone",
+      "location": {"x": 145, "y": -7}
+    },
+    {
+      "id": 15,
+      "text": "Energy Efficiency\nBi-directional Actuation Zone",
+      "location": {"x": 40, "y": 130},
+      "rotate": -45
+    },
+    {
+      "id": 16,
+      "text": "Energy Efficiency\nUnidirectional Actuation Zone",
+      "location": {"x": 100, "y": 100},
+      "rotate": 45
     }
   ]
 }

@@ -45,6 +45,13 @@ export function getCenter(polygon) {
   return [centerX, centerY];
 }
 
+export function getCenterOfMany(polygons) {
+  const [minX, minY, maxX, maxY] = getBoundingBoxOfMany(polygons);
+  const centerX = (minX + maxX) / 2;
+  const centerY = (minY + maxY) / 2;
+  return [centerX, centerY];
+}
+
 export function getPoints(polygon, height) {
   // Using height - y instead of y flips the shape
   // to simulate the coordinate system origin being
@@ -62,4 +69,8 @@ export function getRectangle(x, y, width, height) {
     [x + width, y + height],
     [x + width, y]
   ];
+}
+
+export function getTransform(angle, centerX, centerY) {
+  return angle ? `rotate(${angle}, ${centerX}, ${centerY})` : '';
 }
