@@ -62,7 +62,7 @@
       "id": 3,
       "defId": "bench1",
       "location": {"x": 133, "y": 112},
-      "rotate": 90
+      "angle": 90
     },
     {
       "id": 4,
@@ -90,29 +90,29 @@
       "location": {"x": 72, "y": 75}
     },
     {
-      "id": 9,
-      "defId": "manifold",
+      "stationId": 1,
+      "manifoldId": 9,
       "location": {"x": 8, "y": 6},
       "valveCount": 6
     },
     {
-      "id": 10,
-      "defId": "manifold",
+      "stationId": 2,
+      "manifoldId": 10,
       "location": {"x": 152, "y": 6},
       "valveCount": 6
     },
     {
-      "id": 11,
-      "defId": "manifold",
+      "stationId": 3,
+      "manifoldId": 11,
+      "angle": -45,
       "location": {"x": 27, "y": 144},
-      "rotate": -45,
       "valveCount": 1
     },
     {
-      "id": 12,
-      "defId": "manifold",
+      "stationId": 4,
+      "manifoldId": 12,
+      "angle": 45,
       "location": {"x": 169, "y": 145},
-      "rotate": 45,
       "valveCount": 2
     },
     {
@@ -129,13 +129,13 @@
       "id": 15,
       "text": "Energy Efficiency\nBi-directional Actuation Zone",
       "location": {"x": 43, "y": 139},
-      "rotate": -45
+      "angle": -45
     },
     {
       "id": 16,
       "text": "Energy Efficiency\nUnidirectional Actuation Zone",
       "location": {"x": 161, "y": 139},
-      "rotate": 45
+      "angle": 45
     }
   ]
 }

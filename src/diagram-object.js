@@ -10,10 +10,9 @@ const VALVE_SPACING = 3;
 const VALVE_WIDTH = 5; //7;
 
 export const instancePropType = t.shape({
-  defId: t.string,
-  id: t.number.isRequired,
+  id: t.number,
   location: t.shape({x: t.number, y: t.number}).isRequired,
-  rotate: t.number,
+  angle: t.number,
   text: t.string
 });
 
@@ -31,13 +30,14 @@ class DiagramObject extends Component {
     height: t.number,
     instance: instancePropType,
     limits: t.object.isRequired,
+    manifoldId: t.number,
     manifolds: t.object
   };
 
   getManifold = () => {
     const {filter, height, instance, limits, manifolds} = this.props;
-    const {id, location, rotate, valveCount} = instance;
-    const manifold = manifolds[id];
+    const {angle, location, manifoldId, valveCount} = instance;
+    const manifold = manifolds[manifoldId];
 
     const dx = location.x;
     const dy = location.y;
@@ -56,11 +56,12 @@ class DiagramObject extends Component {
     return (
       <g
         className="manifold"
-        transform={getTransform(rotate, centerX, centerY)}
+        key={manifold}
+        transform={getTransform(angle, centerX, centerY)}
       >
         {
           mapN(valveCount, index => {
-            const valveId = `manifold${id}-valve${index + 1}`;
+            const valveId = `manifold${manifoldId}-valve${index + 1}`;
 
             const valve = manifold && manifold[index];
             const cssClass =
@@ -87,7 +88,7 @@ class DiagramObject extends Component {
    */
   getText = () => {
     const {height, instance} = this.props;
-    const {rotate, location, text} = instance;
+    const {angle, location, text} = instance;
     const pieces = text.split('\n');
     const {x, y} = location;
     const yFlipped = height - y;
@@ -96,12 +97,11 @@ class DiagramObject extends Component {
         className="diagram-text"
         dominantBaseline="central"
         textAnchor="middle"
-        transform={getTransform(rotate, x, yFlipped)}
+        transform={getTransform(angle, x, yFlipped)}
         x={x}
         y={yFlipped}
       >
         {
-          /* eslint-disable react/no-array-index-key */
           pieces.map((piece, index) =>
             <tspan key={index} x={location.x} dy={index * 7}>
               {piece}
@@ -118,23 +118,23 @@ class DiagramObject extends Component {
 
     const {manifolds} = this.props;
     const manifold = manifolds[manifoldId];
-    const valve = manifold[valveId];
+    const valve = manifold[valveId - 1];
     console.log('diagram-object.js onValveClick: valve =', valve);
     React.setState({selectedValve: valve});
   };
 
   render() {
     const {definition, height, instance} = this.props;
-    const {defId, text} = instance;
+    const {manifoldId, text} = instance;
 
-    if (defId === 'manifold') return this.getManifold();
+    if (manifoldId) return this.getManifold();
 
     if (text) return this.getText();
 
     const {type} = definition;
 
     if (type === 'polygon') {
-      const {location, rotate} = instance;
+      const {angle, location} = instance;
       const dx = location.x;
       const dy = location.y;
       const points = definition.points.map(([x, y]) =>
@@ -146,7 +146,7 @@ class DiagramObject extends Component {
           <polygon
             className="polygon"
             points={points}
-            transform={getTransform(rotate, centerX, centerY)}
+            transform={getTransform(angle, centerX, centerY)}
             vectorEffect="non-scaling-stroke"
           />
         </g>

@@ -119,3 +119,13 @@
   fill: #C0504D;
   stroke: #8C3836
 }
+
+.valve-dialog .dialog-value {
+  display: inline-block;
+  text-align: right;
+  width: 70px;
+}
+
+.valve-dialog label {
+  width: 195px;
+}

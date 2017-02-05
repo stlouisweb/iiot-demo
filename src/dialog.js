@@ -3,7 +3,7 @@ import {Button, Modal} from 'react-bootstrap';
 import './dialog.css';
 
 const Dialog = ({
-  buttons = [], children = [], className, kind, show, size, title
+  buttons = [], children = [], className, kind, onClose, show, size, title
 }) => {
   // If there is a single child, put it in an array
   // so we can treat all uses the same.
@@ -38,11 +38,12 @@ const Dialog = ({
     <Modal
       bsSize={size}
       className={`dialog ${className} ${kind}`}
+      onHide={onClose}
       show={show}
     >
       {
         title ?
-          <Modal.Header>
+          <Modal.Header closeButton>
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header> :
           null
@@ -66,6 +67,7 @@ Dialog.propTypes = {
   children: t.oneOfType([t.arrayOf(t.node), t.node, t.string]),
   className: t.string,
   kind: t.string,
+  onClose: t.func,
   show: t.bool.isRequired,
   size: t.oneOf(['large', 'lg', 'sm', 'small']), // modal width
   title: t.string
