@@ -30,7 +30,6 @@ class DiagramObject extends Component {
     height: t.number,
     instance: instancePropType,
     limits: t.object.isRequired,
-    manifoldId: t.number,
     manifolds: t.object
   };
 
