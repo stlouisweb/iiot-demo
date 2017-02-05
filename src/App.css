@@ -2,6 +2,10 @@
   padding: 20px;
 }
 
+.depressed-btn {
+  box-shadow: inset 0 0 0 1px #27496d,inset 0 5px 30px #193047;
+}
+
 .diagram {
   border: solid lightgray 1px;
   height: 100%;
@@ -36,6 +40,10 @@
   height: 100%;
 }
 
+.modal-title {
+  font-weight: bold;
+}
+
 .number-input {
   display: inline-block;
   margin: 2px 0 2px 5px;
@@ -47,31 +55,6 @@
   stroke: blue;
   stroke-width: 1
 }
-
-.toggle-btn {
-  background-image: linear-gradient(0, #86a73f, #a9d451);
-  border: none;
-  box-shadow: inset 0 0 0 1px #27496d;
-  font-size: 18px;
-  height: 74px;
-  margin: 15px 5px;
-  padding: 10px;
-  width: 100px;
-}
-
-.toggle-btn.alert {
-  background-image: linear-gradient(0, #9B3B38, #DD4744);
-}
-
-.depressed-btn {
-  box-shadow: inset 0 0 0 1px #27496d,inset 0 5px 30px #193047;
-}
-
-/*
-.toggle-btn:hover {
-  box-shadow: inset 0 0 0 1px #27496d,0 5px 15px #193047;
-}
-*/
 
 .tabs {
   display: flex;
@@ -107,6 +90,27 @@
   flex-grow: 1;
   height: 600px;
 }
+
+.toggle-btn {
+  background-image: linear-gradient(0, #86a73f, #a9d451);
+  border: none;
+  box-shadow: inset 0 0 0 1px #27496d;
+  font-size: 18px;
+  height: 74px;
+  margin: 15px 5px;
+  padding: 10px;
+  width: 100px;
+}
+
+.toggle-btn.alert {
+  background-image: linear-gradient(0, #9B3B38, #DD4744);
+}
+
+/*
+.toggle-btn:hover {
+  box-shadow: inset 0 0 0 1px #27496d,0 5px 15px #193047;
+}
+*/
 
 .valve {
   fill: #9BBB59;
