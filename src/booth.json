@@ -93,27 +93,27 @@
       "stationId": 1,
       "manifoldId": 9,
       "location": {"x": 8, "y": 6},
-      "valveCount": 6
+      "valveIds": [1000, 1001, 1002, 1003, 1004, 1005]
     },
     {
       "stationId": 2,
       "manifoldId": 10,
       "location": {"x": 152, "y": 6},
-      "valveCount": 6
+      "valveIds": [2000, 2001, 2002, 2003, 2004, 2005]
     },
     {
       "stationId": 3,
       "manifoldId": 11,
       "angle": -45,
       "location": {"x": 27, "y": 144},
-      "valveCount": 1
+      "valveIds": [3000]
     },
     {
       "stationId": 4,
       "manifoldId": 12,
       "angle": 45,
       "location": {"x": 169, "y": 145},
-      "valveCount": 2
+      "valveIds": [4000, 4001]
     },
     {
       "id": 13,

@@ -36,14 +36,14 @@ class DiagramObject extends Component {
 
   getManifold = () => {
     const {filter, height, instance, limits, manifolds} = this.props;
-    const {angle, location, manifoldId, valveCount} = instance;
+    const {angle, location, manifoldId, valveIds} = instance;
     const manifold = manifolds[manifoldId];
 
     const dx = location.x;
     const dy = location.y;
 
     // Get the polygons for each of the valves in this manifold.
-    const valvePolygons = mapN(valveCount, index => {
+    const valvePolygons = mapN(valveIds.length, index => {
       const valveDx = index * (VALVE_WIDTH + VALVE_SPACING);
       const minX = dx + valveDx;
       const minY = height - dy;
@@ -60,7 +60,7 @@ class DiagramObject extends Component {
         transform={getTransform(angle, centerX, centerY)}
       >
         {
-          mapN(valveCount, index => {
+          mapN(valveIds.length, index => {
             const valveId = `manifold${manifoldId}-valve${index + 1}`;
 
             const valve = manifold && manifold[index];

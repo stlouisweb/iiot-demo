@@ -31,15 +31,15 @@ class Diagram extends Component {
       instances.filter(instance => Boolean(instance.manifoldId));
     const manifolds = manifoldInstances.reduce(
       (manifoldMap, instance) => {
-        console.log('diagram.js componentDidMount: instance =', instance);
-        const {manifoldId, stationId, valveCount} = instance;
-        const valves = mapN(valveCount, () => ({
+        const {manifoldId, stationId, valveIds} = instance;
+        const valves = mapN(valveIds.length, index => ({
           cycles: 0,
           fault: false,
           leak: false,
           manifoldId,
           pressure: 0,
-          stationId
+          stationId,
+          valveId: valveIds[index]
         }));
 
         manifoldMap[instance.manifoldId] = valves;

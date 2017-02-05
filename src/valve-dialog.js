@@ -1,5 +1,23 @@
 import React, {Component, PropTypes as t} from 'react';
 import Dialog from './dialog';
+import {LineChart, Themes} from 'formidable-charts';
+
+function getChartSeries() {
+  const SERIES_COUNT = 3;
+  const DATA_POINTS = 10;
+  const MAX_Y = 30;
+
+  const chartSeries = [];
+  for (let seriesNumber = 0; seriesNumber < SERIES_COUNT; seriesNumber++) {
+    const data = [];
+    for (let x = 0; x < DATA_POINTS; x++) {
+      data.push({x, y: Math.random() * MAX_Y});
+    }
+    chartSeries.push({data});
+  }
+
+  return chartSeries;
+}
 
 class ValveDialog extends Component {
   static propTypes = {
@@ -45,7 +63,7 @@ class ValveDialog extends Component {
         onClose={this.closeDialog}
         show={valve !== null}
         size="small"
-        title={`Valve ${valve.id}`}
+        title={`Valve ${valve.valveId}`}
       >
         {
           pairs.map((pair, index) =>
@@ -54,6 +72,8 @@ class ValveDialog extends Component {
               <div className="dialog-value">{getValue(pair.property)}</div>
             </div>)
         }
+
+        <LineChart series={getChartSeries()} theme={Themes.dark} x="x" y="y"/>
       </Dialog>
     );
   }
