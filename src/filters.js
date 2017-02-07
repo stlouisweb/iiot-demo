@@ -30,8 +30,8 @@ class Filters extends Component {
   };
 
   onCyclesChange = event => this.onLimitChange(event, 'cycles');
-  onPressureMinChange = event => this.onLimitChange(event, 'pressureMin');
-  onPressureMaxChange = event => this.onLimitChange(event, 'pressureMax');
+  //onPressureMinChange = event => this.onLimitChange(event, 'pressureMin');
+  //onPressureMaxChange = event => this.onLimitChange(event, 'pressureMax');
 
   render() {
     const {limits} = this.props;
@@ -62,6 +62,7 @@ class Filters extends Component {
           >
             Pressure Fault
           </button>
+          {/*
           <div>
             <label>Min:</label>
             <input
@@ -79,6 +80,7 @@ class Filters extends Component {
               value={limits.pressureMax}
             />
           </div>
+          */}
         </div>
         <div className="filter-row">
           <button
