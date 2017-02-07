@@ -118,7 +118,6 @@ class DiagramObject extends Component {
     const {manifolds} = this.props;
     const manifold = manifolds[manifoldId];
     const valve = manifold[valveId - 1];
-    console.log('diagram-object.js onValveClick: valve =', valve);
     React.setState({selectedValve: valve});
   };
 

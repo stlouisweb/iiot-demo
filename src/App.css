@@ -23,6 +23,10 @@
   font-size: 6px;
 }
 
+.fault {
+  color: red;
+}
+
 .filter-row {
   align-items: center;
   display: flex;

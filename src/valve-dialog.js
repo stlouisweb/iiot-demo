@@ -1,5 +1,6 @@
 import React, {Component, PropTypes as t} from 'react';
 import Dialog from './dialog';
+import {valveHasFault} from './faults';
 import {LineChart, Themes} from 'formidable-charts';
 
 function getChartSeries() {
@@ -19,25 +20,49 @@ function getChartSeries() {
   return chartSeries;
 }
 
+function getCssClass(bool) {
+  return bool ? 'fault' : '';
+}
+
 class ValveDialog extends Component {
   static propTypes = {
+    limits: t.object.isRequired,
     valve: t.object,
   };
 
   closeDialog = () => React.setState({selectedValve: null});
 
   render() {
-    const {valve} = this.props;
+    const {limits, valve} = this.props;
     if (!valve) return null;
+
+    valve.pressureFault = valveHasFault(limits, 'pressure-fault', valve);
+    valve.lifecycleFault = valveHasFault(limits, 'lifecycle', valve);
 
     const pairs = [
       {label: 'Station #', property: 'stationId'},
       {label: 'Manifold Serial #', property: 'manifoldId'},
       {label: 'Valve Serial #', property: 'valveId'},
-      {label: 'Valve Fault', property: 'fault'},
-      {label: 'Leak Fault', property: 'leak'},
-      {label: 'Pressure Fault', property: 'pressureFault'},
-      {label: 'Lifecycle Count', property: 'cycles'},
+      {
+        label: 'Valve Fault',
+        property: 'fault',
+        className: getCssClass(valve.fault)
+      },
+      {
+        label: 'Leak Fault',
+        property: 'leak',
+        className: getCssClass(valve.leak)
+      },
+      {
+        label: 'Pressure Fault',
+        property: 'pressureFault',
+        className: getCssClass(valve.pressureFault)
+      },
+      {
+        label: 'Lifecycle Count',
+        property: 'cycles',
+        className: getCssClass(valve.lifecycleFault)
+      },
       {label: 'Supply Pressure', property: 'pressure'},
       {label: 'Duration Last 1-4', property: 'duration14'},
       {label: 'Duration Last 1-2', property: 'duration12'},
@@ -68,8 +93,12 @@ class ValveDialog extends Component {
         {
           pairs.map((pair, index) =>
             <div key={index}>
-              <label>{pair.label}:</label>
-              <div className="dialog-value">{getValue(pair.property)}</div>
+              <label className={pair.className}>
+                {pair.label}:
+              </label>
+              <div className={`dialog-value ${pair.className}`}>
+                {getValue(pair.property)}
+              </div>
             </div>)
         }
 

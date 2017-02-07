@@ -58,7 +58,7 @@ class Diagram extends Component {
 
     return (
       <div className="diagram">
-        <ValveDialog valve={selectedValve}/>
+        <ValveDialog limits={limits} valve={selectedValve}/>
         <svg className="diagram-svg" viewBox={viewBox}>
           {
             instances.map(instance => {
