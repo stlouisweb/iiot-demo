@@ -40,6 +40,10 @@
   height: 100%;
 }
 
+img {
+  height: 600px;
+}
+
 .modal-title {
   font-weight: bold;
 }
@@ -153,7 +157,6 @@
     fill: pink;
   }
 }
-
 
 .valve-dialog .dialog-value {
   display: inline-block;

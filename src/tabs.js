@@ -18,7 +18,7 @@ class Tabs extends Component {
   getContent = () => {
     const {filter, limits, manifolds, selectedTab, selectedValve} = this.props;
     return selectedTab === 'facility' ?
-      <div>The facility view is coming soon!</div> :
+      <img alt="facility floor plan" src="images/floorplan.png"/> :
       selectedTab === 'department' ?
       [
         <Diagram
