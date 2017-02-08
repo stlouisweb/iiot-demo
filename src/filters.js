@@ -10,14 +10,16 @@ class Filters extends Component {
 
   cssClasses = thisFilter => {
     const {filter, limits, manifolds} = this.props;
-    const c1 = thisFilter === filter ? 'depressed-btn' : '';
+    const c1 = thisFilter === filter ? 'down' : 'up';
     const c2 = anyHasSpecificFault(limits, thisFilter, manifolds) ? 'alert' : '';
     return `${c1} ${c2}`;
   }
 
   onClick = event => {
     const {id} = event.target;
-    React.setState({filter: id});
+    React.setState(state => ({
+      filter: state.filter === id ? null : id
+    }));
   };
 
   onLimitChange = (event, limitName) => {

@@ -6,7 +6,7 @@ import boothShapes from './booth.json';
 
 class Tabs extends Component {
   static propTypes = {
-    filter: t.string.isRequired,
+    filter: t.string,
     limits: t.object.isRequired,
     manifolds: t.object.isRequired,
     selectedTab: t.string.isRequired,
