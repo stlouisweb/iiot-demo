@@ -1,5 +1,5 @@
 import React, {Component, PropTypes as t} from 'react';
-import {anyHasFault} from './faults';
+import {anyHasSpecificFault} from './faults';
 
 class Filters extends Component {
   static propTypes = {
@@ -11,7 +11,7 @@ class Filters extends Component {
   cssClasses = thisFilter => {
     const {filter, limits, manifolds} = this.props;
     const c1 = thisFilter === filter ? 'depressed-btn' : '';
-    const c2 = anyHasFault(limits, thisFilter, manifolds) ? 'alert' : '';
+    const c2 = anyHasSpecificFault(limits, thisFilter, manifolds) ? 'alert' : '';
     return `${c1} ${c2}`;
   }
 

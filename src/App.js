@@ -52,6 +52,12 @@ class App extends Component {
       leak: false,
       pressure: 0
     });
+    this.updateValve(9, 5, {
+      cycles: 0,
+      fault: false,
+      leak: false,
+      pressure: 600
+    });
   }
 
   updateValve(manifoldId, valveIndex, changes) {

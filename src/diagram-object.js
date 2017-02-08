@@ -3,7 +3,7 @@ import {
   getCenter, getCenterOfMany, getRectangle, getTransform
 } from './polygons';
 import mapN from './map-n';
-import {valveHasFault} from './faults';
+import {valveHasAnyFault, valveHasSpecificFault} from './faults';
 
 const VALVE_HEIGHT = 18; //25;
 const VALVE_SPACING = 3;
@@ -63,12 +63,15 @@ class DiagramObject extends Component {
             const valveId = `manifold${manifoldId}-valve${index + 1}`;
 
             const valve = manifold && manifold[index];
-            const cssClass =
-              valveHasFault(limits, filter, valve) ? 'alert' : '';
+
+            const otherClass =
+              valveHasSpecificFault(limits, filter, valve) ? 'selected-fault' :
+              valveHasAnyFault(limits, valve) ? 'any-fault' :
+              'no-fault';
 
             return (
               <polygon
-                className={`valve ${cssClass}`}
+                className={`valve ${otherClass}`}
                 id={valveId}
                 key={valveId}
                 onClick={this.onValveClick}

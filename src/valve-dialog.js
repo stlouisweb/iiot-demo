@@ -1,6 +1,6 @@
 import React, {Component, PropTypes as t} from 'react';
 import Dialog from './dialog';
-import {valveHasFault} from './faults';
+import {valveHasSpecificFault} from './faults';
 import {LineChart, Themes} from 'formidable-charts';
 
 function getChartSeries() {
@@ -36,8 +36,10 @@ class ValveDialog extends Component {
     const {limits, valve} = this.props;
     if (!valve) return null;
 
-    valve.pressureFault = valveHasFault(limits, 'pressure-fault', valve);
-    valve.lifecycleFault = valveHasFault(limits, 'lifecycle', valve);
+    valve.pressureFault =
+      valveHasSpecificFault(limits, 'pressure-fault', valve);
+    valve.lifecycleFault =
+      valveHasSpecificFault(limits, 'lifecycle', valve);
 
     const pairs = [
       {label: 'Station #', property: 'stationId'},
