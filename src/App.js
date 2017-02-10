@@ -9,6 +9,7 @@ class App extends Component {
     React.setState = this.setState.bind(this);
 
     this.state = {
+      alerts: [{id: 1, x: 610, y: 380}],
       limits: {
         cycles: 1000,
         pressureMin: 500,
@@ -72,11 +73,12 @@ class App extends Component {
 
   render() {
     const {
-      filter, limits, manifolds, selectedTab, selectedValve
+      alerts, filter, limits, manifolds, selectedTab, selectedValve
     } = this.state;
     return (
       <div className="App">
         <Tabs
+          alerts={alerts}
           filter={filter}
           limits={limits}
           manifolds={manifolds}

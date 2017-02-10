@@ -54,7 +54,6 @@ class Diagram extends Component {
     const {definitions, height, instances, width} = shapes;
     const viewBox =
       `${-PADDING} ${-PADDING} ${width + PADDING} ${height + PADDING}`;
-    console.log('diagram.js render: viewBox =', viewBox);
 
     return (
       <div className="diagram">

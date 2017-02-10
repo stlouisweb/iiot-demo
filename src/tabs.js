@@ -1,11 +1,13 @@
 import React, {Component, PropTypes as t} from 'react';
 import Diagram from './diagram';
+import Facility, {alertType} from './facility';
 import Filters from './filters';
 
 import boothShapes from './booth.json';
 
 class Tabs extends Component {
   static propTypes = {
+    alerts: alertType.isRequired,
     filter: t.string,
     limits: t.object.isRequired,
     manifolds: t.object.isRequired,
@@ -16,9 +18,15 @@ class Tabs extends Component {
   getBtnClass = id => this.props.selectedTab === id ? 'depressed-btn' : '';
 
   getContent = () => {
-    const {filter, limits, manifolds, selectedTab, selectedValve} = this.props;
+    const {
+      alerts, filter, limits, manifolds, selectedTab, selectedValve
+    } = this.props;
+
     return selectedTab === 'facility' ?
-      <img alt="facility floor plan" src="images/floorplan.png"/> :
+      <Facility
+        alerts={alerts}
+        onAlertClick={this.onAlertClick}
+      /> :
       selectedTab === 'department' ?
       [
         <Diagram
@@ -37,6 +45,11 @@ class Tabs extends Component {
         />
       ] :
       <div>invalid tab</div>;
+  };
+
+  onAlertClick = alertId => {
+    console.log('tabs.js onAlertClick: alertId =', alertId);
+    React.setState({selectedTab: 'department'});
   };
 
   onClick = event => React.setState({selectedTab: event.target.id});

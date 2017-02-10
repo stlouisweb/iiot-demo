@@ -19,6 +19,19 @@
   font-size: 6px;
 }
 
+.facility-alert {
+  height: 600px;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.facility-alert circle {
+  animation: pulse 0.5s infinite;
+  stroke: #8C3836;
+  fill: red;
+}
+
 .fault {
   color: red;
 }
@@ -34,10 +47,10 @@
 }
 
 .filters {
-  justify-content: center;
   display: flex;
   flex-direction: column;
   height: 100%;
+  justify-content: center;
 }
 
 img {
@@ -60,6 +73,10 @@ img {
   stroke-width: 1
 }
 
+.tab-content {
+  position: relative;
+}
+
 .tabs {
   display: flex;
 }
@@ -67,7 +84,6 @@ img {
 .tabs button {
   background-color: lightgray;
   border-radius: 4px;
-  border-shadow: none;
   border-width: 0;
   color: white;
   padding: 10px;
@@ -96,12 +112,9 @@ img {
 }
 
 .toggle-btn {
-}
-
-.toggle-btn {
   background-image: linear-gradient(0, #86a73f, #a9d451);
-  border-radius: 5px;
   border: none;
+  border-radius: 5px;
   box-shadow: inset 0 0 0 1px #27496d;
   color: white;
   font-size: 18px;
@@ -154,7 +167,8 @@ img {
     fill: #C0504D; /* red */
   }
   100% {
-    fill: pink;
+    /*fill: pink;*/
+    fill: #FF5050;
   }
 }
 
