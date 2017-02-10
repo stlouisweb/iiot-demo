@@ -25,28 +25,31 @@ class Diagram extends Component {
     const svg = document.querySelector('.diagram-svg');
     if (svg) svgPanZoom(svg, {controlIconsEnabled: true});
 
-    // Update state with manifold details.
-    const {instances} = this.props.shapes;
-    const manifoldInstances =
-      instances.filter(instance => Boolean(instance.manifoldId));
-    const manifolds = manifoldInstances.reduce(
-      (manifoldMap, instance) => {
-        const {manifoldId, stationId, valveIds} = instance;
-        const valves = mapN(valveIds.length, index => ({
-          cycles: 0,
-          fault: false,
-          leak: false,
-          manifoldId,
-          pressure: 0,
-          stationId,
-          valveId: valveIds[index]
-        }));
+    const manifoldsCreated = Object.keys(this.props.manifolds).length > 0;
+    if (!manifoldsCreated) {
+      // Update state with manifold details.
+      const {instances} = this.props.shapes;
+      const manifoldInstances =
+        instances.filter(instance => Boolean(instance.manifoldId));
+      const manifolds = manifoldInstances.reduce(
+        (manifoldMap, instance) => {
+          const {manifoldId, stationId, valveIds} = instance;
+          const valves = mapN(valveIds.length, index => ({
+            cycles: 0,
+            fault: false,
+            leak: false,
+            manifoldId,
+            pressure: 0,
+            stationId,
+            valveId: valveIds[index]
+          }));
 
-        manifoldMap[instance.manifoldId] = valves;
-        return manifoldMap;
-      },
-      {});
-    React.setState({manifolds});
+          manifoldMap[instance.manifoldId] = valves;
+          return manifoldMap;
+        },
+        {});
+      React.setState({manifolds});
+    }
   }
 
   render() {
