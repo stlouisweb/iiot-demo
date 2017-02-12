@@ -12,17 +12,14 @@ export function valveHasAnyFault(limits, valve) {
     valve.fault ||
     valve.leak ||
     valve.cycles > limits.cycles ||
-    valve.pressure < limits.pressureMin ||
-    valve.pressure > limits.pressureMax;
+    valve.pressure;
 }
 
 export function valveHasSpecificFault(limits, faultType, valve) {
   return !valve ? false :
     faultType === 'leak-fault' ? valve.leak :
     faultType === 'lifecycle' ? valve.cycles > limits.cycles :
-    faultType === 'pressure-fault' ?
-      valve.pressure < limits.pressureMin ||
-      valve.pressure > limits.pressureMax :
+    faultType === 'pressure-fault' ? valve.pressure :
     faultType === 'valve-fault' ? valve.fault :
     false;
 }

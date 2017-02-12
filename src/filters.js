@@ -32,8 +32,6 @@ class Filters extends Component {
   };
 
   onCyclesChange = event => this.onLimitChange(event, 'cycles');
-  //onPressureMinChange = event => this.onLimitChange(event, 'pressureMin');
-  //onPressureMaxChange = event => this.onLimitChange(event, 'pressureMax');
 
   render() {
     const {limits} = this.props;

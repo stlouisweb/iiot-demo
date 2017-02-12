@@ -36,8 +36,6 @@ class ValveDialog extends Component {
     const {limits, valve} = this.props;
     if (!valve) return null;
 
-    valve.pressureFault =
-      valveHasSpecificFault(limits, 'pressure-fault', valve);
     valve.lifecycleFault =
       valveHasSpecificFault(limits, 'lifecycle', valve);
 
@@ -57,15 +55,15 @@ class ValveDialog extends Component {
       },
       {
         label: 'Pressure Fault',
-        property: 'pressureFault',
-        className: getCssClass(valve.pressureFault)
+        property: 'pressure',
+        className: getCssClass(valve.pressure)
       },
       {
         label: 'Lifecycle Count',
         property: 'cycles',
         className: getCssClass(valve.lifecycleFault)
       },
-      {label: 'Supply Pressure', property: 'pressure'},
+      //{label: 'Supply Pressure', property: 'pressure'},
       {label: 'Duration Last 1-4', property: 'duration14'},
       {label: 'Duration Last 1-2', property: 'duration12'},
       {label: 'Equalization Avg. Pressure', property: 'eqAvgPressure'},

@@ -2,6 +2,12 @@
   padding: 20px;
 }
 
+.App > img {
+  height: 100px;
+  position: relative;
+  top: -70px;
+}
+
 .diagram {
   border: solid lightgray 1px;
   height: 100%;
@@ -167,8 +173,7 @@ img {
     fill: #C0504D; /* red */
   }
   100% {
-    /*fill: pink;*/
-    fill: #FF5050;
+    fill: #FF7070;
   }
 }
 
