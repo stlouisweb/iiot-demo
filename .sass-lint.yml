@@ -1,0 +1,4 @@
+rules:
+  max-nesting-depth: 3
+  no-color-keywords: 0
+  no-color-literals: 0

@@ -129,7 +129,7 @@ class App extends Component {
       alerts, filter, limits, manifolds, selectedTab, selectedValve
     } = this.state;
     return (
-      <div className="App">
+      <div className="app">
         <Tabs
           alerts={alerts}
           filter={filter}

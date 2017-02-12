@@ -6,6 +6,7 @@
     "eslint": "^3.15.0",
     "eslint-plugin-flowtype": "^2.30.0",
     "eslint-plugin-react": "^6.9.0",
+    "node-sass": "^4.5.0",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
@@ -17,8 +18,10 @@
     "svg-pan-zoom": "^3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build-css": "node-sass src/ -o src/",
+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch",
+    "start": "react-scripts start & npm run watch-css",
+    "build": "react-scripts build && npm run build-css",
     "test": "react-scripts test --env=jsdom",
     "lint": "eslint src/**/*.js"
   }
