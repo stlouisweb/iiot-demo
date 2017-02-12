@@ -155,7 +155,8 @@ img {
 
 .valve {
   stroke-linejoin: round;
-  stroke-width: 1;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
 }
 .valve.any-fault {
   fill: #C0504D; /* red */
