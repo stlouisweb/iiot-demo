@@ -7,15 +7,20 @@ import '../lib/mqttws31';
 const MQTT_IP = '10.201.200.60';
 const MQTT_PORT = 9001;
 
-function bytesToBase64(buffer) {
-  let binary = '';
+function bytesToNumber(buffer) {
+  //const bytes = buffer; // for testing
   const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return window.btoa(binary);
+  const len = bytes.length;
+  return bytes.reduce(
+    (result, byte, index) =>
+      result + byte * Math.pow(256, len - index - 1),
+    0);
 }
+
+/* For testing ...
+const bytes = [2, 3, 4, 5];
+console.log('App.js x: bytesToNumber =', bytesToNumber(bytes));
+*/
 
 class App extends Component {
   constructor() {
@@ -64,7 +69,7 @@ class App extends Component {
         field === 'PressureFault' ?
           payloadString === 'Low' || payloadString === 'High' :
         field === 'LeakFault' ? payloadString === 'True' :
-        field === 'LifeCycleCount' ? bytesToBase64(payloadBytes) :
+        field === 'LifeCycleCount' ? bytesToNumber(payloadBytes) :
         null;
       console.log('App.js x: prop =', prop);
       console.log('App.js x: value =', value);

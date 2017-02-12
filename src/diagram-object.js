@@ -5,9 +5,12 @@ import {
 import mapN from './map-n';
 import {valveHasAnyFault, valveHasSpecificFault} from './faults';
 
+//const VALVE_HEIGHT = 18;
+//const VALVE_SPACING = 3;
+//const VALVE_WIDTH = 5;
 const VALVE_HEIGHT = 18;
-const VALVE_SPACING = 3;
-const VALVE_WIDTH = 5;
+const VALVE_SPACING = 2;
+const VALVE_WIDTH = 2;
 
 export const instancePropType = t.shape({
   id: t.number,
