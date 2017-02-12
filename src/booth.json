@@ -76,18 +76,21 @@
     {
       "stationId": 1,
       "manifoldId": 9,
+      "horizontal": false,
       "location": {"x": 8, "y": 6},
       "valveIds": [1000, 1001, 0, 0, 1004, 1005]
     },
     {
       "stationId": 2,
       "manifoldId": 10,
+      "horizontal": false,
       "location": {"x": 152, "y": 6},
       "valveIds": [2000, 2001, 0, 0, 2004, 2005]
     },
     {
       "stationId": 3,
       "manifoldId": 11,
+      "horizontal": true,
       "angle": -45,
       "location": {"x": 27, "y": 144},
       "valveIds": [3000]
@@ -95,6 +98,7 @@
     {
       "stationId": 4,
       "manifoldId": 12,
+      "horizontal": true,
       "angle": 45,
       "location": {"x": 169, "y": 145},
       "valveIds": [4000, 4001]

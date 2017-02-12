@@ -5,9 +5,9 @@ import {
 import mapN from './map-n';
 import {valveHasAnyFault, valveHasSpecificFault} from './faults';
 
-const VALVE_HEIGHT = 18; //25;
+const VALVE_HEIGHT = 18;
 const VALVE_SPACING = 3;
-const VALVE_WIDTH = 5; //7;
+const VALVE_WIDTH = 5;
 
 export const instancePropType = t.shape({
   id: t.number,
@@ -35,7 +35,7 @@ class DiagramObject extends Component {
     manifolds: t.object
   };
 
-  getManifold = () => {
+  getManifold = horizontal => {
     const {filter, height, instance, limits, manifolds} = this.props;
     const {angle, location, manifoldId, valveIds} = instance;
     const manifold = manifolds[manifoldId];
@@ -45,10 +45,12 @@ class DiagramObject extends Component {
 
     // Get the polygons for each of the valves in this manifold.
     const valvePolygons = mapN(valveIds.length, index => {
-      const valveDx = index * (VALVE_WIDTH + VALVE_SPACING);
-      const minX = dx + valveDx;
-      const minY = height - dy;
-      return getRectangle(minX, minY, VALVE_WIDTH, -VALVE_HEIGHT);
+      const delta = index * (VALVE_WIDTH + VALVE_SPACING);
+      const minX = horizontal ? dx + delta : dx;
+      const minY = horizontal ? height - dy : height - dy - delta;
+      return horizontal ?
+        getRectangle(minX, minY, VALVE_WIDTH, -VALVE_HEIGHT) :
+        getRectangle(minX, minY, VALVE_HEIGHT, -VALVE_WIDTH);
     });
 
     // Get the transformation to be applied to this manifold.
@@ -130,9 +132,9 @@ class DiagramObject extends Component {
 
   render() {
     const {definition, height, instance} = this.props;
-    const {manifoldId, text} = instance;
+    const {horizontal, manifoldId, text} = instance;
 
-    if (manifoldId) return this.getManifold();
+    if (manifoldId) return this.getManifold(horizontal);
 
     if (text) return this.getText();
 
