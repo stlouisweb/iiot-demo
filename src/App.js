@@ -91,14 +91,14 @@ class App extends Component {
     });
     this.updateValve(9, 1, {
       cycles: 999,
-      fault: true,
-      leak: false,
+      fault: false,
+      leak: true,
       pressure: false
     });
     this.updateValve(9, 4, {
       cycles: 998,
-      fault: false,
-      leak: true,
+      fault: true,
+      leak: false,
       pressure: false
     });
     this.updateValve(9, 5, {

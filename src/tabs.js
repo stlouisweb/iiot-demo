@@ -15,7 +15,10 @@ class Tabs extends Component {
     selectedValve: t.object
   };
 
-  getBtnClass = id => this.props.selectedTab === id ? 'depressed-btn' : '';
+  getBtnClass = id => {
+    const selected = this.props.selectedTab === id;
+    return `toggle-btn ${selected ? 'down' : 'up'}`;
+  };
 
   getContent = () => {
     const {
