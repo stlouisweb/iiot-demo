@@ -164,6 +164,10 @@ img {
   fill: #9BBB59; /* green */
   stroke: #72893F;
 }
+.valve.open-slot {
+  fill: lightgray;
+  stroke: lightgray;
+}
 .valve.selected-fault {
   animation: pulse 0.5s infinite;
   stroke: #8C3836;

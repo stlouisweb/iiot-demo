@@ -71,6 +71,18 @@ export function getRectangle(x, y, width, height) {
   ];
 }
 
-export function getTransform(angle, centerX, centerY) {
-  return angle ? `rotate(${angle}, ${centerX}, ${centerY})` : '';
+export function getTransform(angle, centerX, centerY, flipX, flipY, polygon) {
+  const rotate = angle ? `rotate(${angle}, ${centerX}, ${centerY})` : '';
+
+  let scale = '';
+  if (flipX || flipY) {
+    const [minX, minY, maxX, maxY] = getBoundingBoxOfOne(polygon);
+    const dx = flipY ? minX + maxX : 0;
+    const dy = flipX ? minY + maxY : 0;
+    const sx = flipY ? -1 : 1;
+    const sy = flipX ? -1 : 1;
+    scale = `translate(${dx},${dy}) scale(${sx},${sy})`;
+  }
+
+  return `${rotate} ${scale}`;
 }

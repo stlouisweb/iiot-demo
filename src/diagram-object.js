@@ -13,6 +13,8 @@ export const instancePropType = t.shape({
   id: t.number,
   location: t.shape({x: t.number, y: t.number}).isRequired,
   angle: t.number,
+  flipX: t.bool,
+  flipY: t.bool,
   text: t.string
 });
 
@@ -60,11 +62,13 @@ class DiagramObject extends Component {
       >
         {
           mapN(valveIds.length, index => {
-            const valveId = `manifold${manifoldId}-valve${index + 1}`;
+            const valveId = valveIds[index];
+            const polygonId = `manifold${manifoldId}-valve${index + 1}`;
 
             const valve = manifold && manifold[index];
 
             const otherClass =
+              valveId === 0 ? 'open-slot' :
               valveHasSpecificFault(limits, filter, valve) ? 'selected-fault' :
               valveHasAnyFault(limits, valve) ? 'any-fault' :
               'no-fault';
@@ -72,8 +76,8 @@ class DiagramObject extends Component {
             return (
               <polygon
                 className={`valve ${otherClass}`}
-                id={valveId}
-                key={valveId}
+                id={polygonId}
+                key={polygonId}
                 onClick={this.onValveClick}
                 points={valvePolygons[index]}
               />
@@ -135,7 +139,7 @@ class DiagramObject extends Component {
     const {type} = definition;
 
     if (type === 'polygon') {
-      const {angle, location} = instance;
+      const {angle, flipX, flipY, location} = instance;
       const dx = location.x;
       const dy = location.y;
       const points = definition.points.map(([x, y]) =>
@@ -147,7 +151,7 @@ class DiagramObject extends Component {
           <polygon
             className="polygon"
             points={points}
-            transform={getTransform(angle, centerX, centerY)}
+            transform={getTransform(angle, centerX, centerY, flipX, flipY, points)}
             vectorEffect="non-scaling-stroke"
           />
         </g>

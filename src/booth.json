@@ -32,16 +32,9 @@
       "type": "polygon",
       "points": [
         [0, 0],
-        [0, 61],
-        [21, 61],
-        [21, 0]
-      ]
-    },
-    "bench3": {
-      "type": "polygon",
-      "points": [
-        [0, 0],
-        [0, 30],
+        [0, 91],
+        [21, 91],
+        [21, 30],
         [61, 30],
         [61, 0]
       ]
@@ -67,21 +60,12 @@
     {
       "id": 4,
       "defId": "bench2",
-      "location": {"x": 0, "y": 30}
+      "location": {"x": 0, "y": 0}
     },
     {
       "id": 5,
       "defId": "bench2",
-      "location": {"x": 184, "y": 30}
-    },
-    {
-      "id": 6,
-      "defId": "bench3",
-      "location": {"x": 0, "y": 0}
-    },
-    {
-      "id": 7,
-      "defId": "bench3",
+      "flipY": true,
       "location": {"x": 144, "y": 0}
     },
     {
@@ -93,13 +77,13 @@
       "stationId": 1,
       "manifoldId": 9,
       "location": {"x": 8, "y": 6},
-      "valveIds": [1000, 1001, 1002, 1003, 1004, 1005]
+      "valveIds": [1000, 1001, 0, 0, 1004, 1005]
     },
     {
       "stationId": 2,
       "manifoldId": 10,
       "location": {"x": 152, "y": 6},
-      "valveIds": [2000, 2001, 2002, 2003, 2004, 2005]
+      "valveIds": [2000, 2001, 0, 0, 2004, 2005]
     },
     {
       "stationId": 3,

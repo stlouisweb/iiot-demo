@@ -87,7 +87,7 @@ class App extends Component {
       cycles: 1000,
       fault: false,
       leak: false,
-      pressure: true
+      pressure: false
     });
     this.updateValve(9, 1, {
       cycles: 999,
@@ -95,29 +95,17 @@ class App extends Component {
       leak: false,
       pressure: false
     });
-    this.updateValve(9, 2, {
+    this.updateValve(9, 4, {
       cycles: 998,
       fault: false,
       leak: true,
       pressure: false
     });
-    this.updateValve(9, 3, {
+    this.updateValve(9, 5, {
       cycles: 997,
       fault: false,
       leak: false,
       pressure: true
-    });
-    this.updateValve(9, 4, {
-      cycles: 0,
-      fault: false,
-      leak: false,
-      pressure: true
-    });
-    this.updateValve(9, 5, {
-      cycles: 0,
-      fault: false,
-      leak: false,
-      pressure: false
     });
   }
 
