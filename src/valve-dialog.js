@@ -88,7 +88,7 @@ class ValveDialog extends Component {
         onClose={this.closeDialog}
         show={valve !== null}
         size="small"
-        title={`Valve ${valve.valveId}`}
+        title={`Manifold ${valve.manifoldId} Valve ${valve.valveId}`}
       >
         {
           pairs.map((pair, index) =>

@@ -55,7 +55,8 @@ class Tabs extends Component {
     React.setState({selectedTab: 'department'});
   };
 
-  onClick = event => React.setState({selectedTab: event.target.id});
+  onClick = event =>
+    React.setState({selectedTab: event.target.id});
 
   render() {
     return (

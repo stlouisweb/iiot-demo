@@ -5,9 +5,6 @@ import {
 import mapN from './map-n';
 import {valveHasAnyFault, valveHasSpecificFault} from './faults';
 
-//const VALVE_HEIGHT = 18;
-//const VALVE_SPACING = 3;
-//const VALVE_WIDTH = 5;
 const VALVE_HEIGHT = 18;
 const VALVE_SPACING = 2;
 const VALVE_WIDTH = 3;
@@ -68,12 +65,12 @@ class DiagramObject extends Component {
         {
           mapN(valveIds.length, index => {
             const valveId = valveIds[index];
-            const polygonId = `manifold${manifoldId}-valve${index + 1}`;
+            const polygonId = `manifold${manifoldId}-valve${index}`;
 
             const valve = manifold && manifold[index];
 
             const otherClass =
-              valveId === 0 ? 'open-slot' :
+              valveId === -1 ? 'open-slot' :
               valveHasSpecificFault(limits, filter, valve) ? 'selected-fault' :
               valveHasAnyFault(limits, valve) ? 'any-fault' :
               'no-fault';
@@ -129,8 +126,8 @@ class DiagramObject extends Component {
 
     const {manifolds} = this.props;
     const manifold = manifolds[manifoldId];
-    const valve = manifold[valveId - 1];
-    React.setState({selectedValve: valve});
+    const valve = manifold[valveId];
+    React.setState(() => ({selectedValve: valve}));
   };
 
   render() {
@@ -150,13 +147,15 @@ class DiagramObject extends Component {
       const points = definition.points.map(([x, y]) =>
         [x + dx, height - (y + dy)]);
       const [centerX, centerY] = getCenter(points);
+      const transform =
+        getTransform(angle, centerX, centerY, flipX, flipY, points);
 
       return (
         <g>
           <polygon
             className="polygon"
             points={points}
-            transform={getTransform(angle, centerX, centerY, flipX, flipY, points)}
+            transform={transform}
             vectorEffect="non-scaling-stroke"
           />
         </g>

@@ -48,6 +48,7 @@ class Diagram extends Component {
           return manifoldMap;
         },
         {});
+
       React.setState({manifolds});
     }
   }

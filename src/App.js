@@ -7,6 +7,9 @@ import '../lib/mqttws31';
 const MQTT_IP = '10.201.200.60';
 const MQTT_PORT = 9001;
 
+let dirty = false;
+const manifolds = {};
+
 function bytesToNumber(buffer) {
   //const bytes = buffer; // for testing
   const bytes = new Uint8Array(buffer);
@@ -16,11 +19,6 @@ function bytesToNumber(buffer) {
       result + byte * Math.pow(256, len - index - 1),
     0);
 }
-
-/* For testing ...
-const bytes = [2, 3, 4, 5];
-console.log('App.js x: bytesToNumber =', bytesToNumber(bytes));
-*/
 
 class App extends Component {
   constructor() {
@@ -32,16 +30,14 @@ class App extends Component {
       alerts: [{id: 1, x: 610, y: 380}],
       limits: {cycles: 1000},
       filter: 'leak-fault',
-      manifolds: {},
+      manifolds,
       selectedTab: 'department',
       selectedValve: null
     };
-
-    this.pahoSetup();
   }
 
   pahoSetup() {
-    const clientId = 'myWsClient'; //TODO: Make this unique!
+    const clientId = `id${Date.now()}`;
     const client = new Paho.MQTT.Client(MQTT_IP, MQTT_PORT, clientId);
 
     client.onMessageArrived = message => {
@@ -50,7 +46,7 @@ class App extends Component {
 
       if (deviceType !== 'manifold') return;
 
-      console.log(`App.js x: field = "${field}"`);
+      //console.log(`App.js x: field = "${field}"`);
       const prop =
         //field === 'ValveFault' ? 'fault' :
         field === 'ValueFault' ? 'fault' : // note typo in field name
@@ -58,16 +54,16 @@ class App extends Component {
         field === 'LeakFault' ? 'leak' :
         field === 'LifeCycleCount' ? 'cycles' :
         null;
-      console.log('App.js pahoSetup: prop =', prop);
+      //console.log('App.js pahoSetup: prop =', prop);
 
       if (!prop) return;
 
       const isLifeCycle = field === 'LifeCycleCount';
 
       const payloadBytes = isLifeCycle ? message.payloadBytes : [];
-      console.log('App.js x: payloadBytes =', payloadBytes);
+      //console.log('App.js x: payloadBytes =', payloadBytes);
       const payloadString = isLifeCycle ? '' : message.payloadString;
-      console.log('App.js x: payloadString =', payloadString);
+      //console.log('App.js x: payloadString =', payloadString);
 
       const value =
         field === 'ValveFault' ? payloadString === 'True' :
@@ -118,16 +114,25 @@ class App extends Component {
       leak: false,
       pressure: true
     });
+
+    this.pahoSetup();
+
+    setInterval(
+      () => {
+        if (dirty) {
+          dirty = false;
+          this.setState({manifolds});
+        }
+      },
+      500);
   }
 
-  updateValve(manifoldId, valveIndex, changes) {
-    this.setState(state => {
-      const {manifolds} = state;
-      const valves = manifolds[manifoldId];
-      const valve = valves[valveIndex];
-      valves[valveIndex] = Object.assign(valve, changes);
-      return {manifolds};
-    });
+  updateValve(manifoldId, valveId, changes) {
+    let valves = manifolds[manifoldId];
+    if (!valves) valves = manifolds[manifoldId] = [];
+    const valve = valves[valveId] || {manifoldId, valveId};
+    valves[valveId] = Object.assign(valve, changes);
+    dirty = true;
   }
 
   render() {

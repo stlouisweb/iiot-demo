@@ -37,10 +37,6 @@
     }
   }
 
-  .fault {
-    color: red;
-  }
-
   .filter-row {
     align-items: center;
     display: flex;
@@ -186,6 +182,10 @@
     display: inline-block;
     text-align: right;
     width: 70px;
+  }
+
+  .fault {
+    color: red;
   }
 
   label {
