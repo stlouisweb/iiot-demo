@@ -10,7 +10,7 @@ import {valveHasAnyFault, valveHasSpecificFault} from './faults';
 //const VALVE_WIDTH = 5;
 const VALVE_HEIGHT = 18;
 const VALVE_SPACING = 2;
-const VALVE_WIDTH = 2;
+const VALVE_WIDTH = 3;
 
 export const instancePropType = t.shape({
   id: t.number,

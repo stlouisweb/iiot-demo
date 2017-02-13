@@ -180,20 +180,19 @@
       fill: #FF7070;
     }
   }
+}
+.valve-dialog {
+  .dialog-value {
+    display: inline-block;
+    text-align: right;
+    width: 70px;
+  }
 
-  .valve-dialog {
-    .dialog-value {
-      display: inline-block;
-      text-align: right;
-      width: 70px;
-    }
+  label {
+    width: 195px;
+  }
 
-    label {
-      width: 195px;
-    }
-
-    svg {
-      padding-top: 0 !important;
-    }
+  svg {
+    padding-top: 0 !important;
   }
 }

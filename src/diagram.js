@@ -56,7 +56,7 @@ class Diagram extends Component {
     const {filter, limits, manifolds, selectedValve, shapes} = this.props;
     const {definitions, height, instances, width} = shapes;
     const viewBox =
-      `${-PADDING} ${-PADDING} ${width + PADDING} ${height + PADDING}`;
+      `${-PADDING} 0 ${width + PADDING} ${height + PADDING}`;
 
     return (
       <div className="diagram">

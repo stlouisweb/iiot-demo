@@ -37,7 +37,7 @@ class App extends Component {
       selectedValve: null
     };
 
-    //this.pahoSetup();
+    this.pahoSetup();
   }
 
   pahoSetup() {
@@ -50,20 +50,25 @@ class App extends Component {
 
       if (deviceType !== 'manifold') return;
 
-      console.log('App.js x: field =', field);
+      console.log(`App.js x: field = "${field}"`);
       const prop =
-        field === 'ValveFault' ? 'fault' :
+        //field === 'ValveFault' ? 'fault' :
+        field === 'ValueFault' ? 'fault' : // note typo in field name
         field === 'PressureFault' ? 'pressureFault' :
         field === 'LeakFault' ? 'leak' :
         field === 'LifeCycleCount' ? 'cycles' :
         null;
+      console.log('App.js pahoSetup: prop =', prop);
 
       if (!prop) return;
 
-      const {payloadBytes, payloadString} = message;
-      if (field === 'LifeCycleCount') {
-        console.log('App.js x: payloadBytes =', payloadBytes);
-      }
+      const isLifeCycle = field === 'LifeCycleCount';
+
+      const payloadBytes = isLifeCycle ? message.payloadBytes : [];
+      console.log('App.js x: payloadBytes =', payloadBytes);
+      const payloadString = isLifeCycle ? '' : message.payloadString;
+      console.log('App.js x: payloadString =', payloadString);
+
       const value =
         field === 'ValveFault' ? payloadString === 'True' :
         field === 'PressureFault' ?
@@ -71,9 +76,10 @@ class App extends Component {
         field === 'LeakFault' ? payloadString === 'True' :
         field === 'LifeCycleCount' ? bytesToNumber(payloadBytes) :
         null;
-      console.log('App.js x: prop =', prop);
-      console.log('App.js x: value =', value);
       const update = {[prop]: value};
+      console.log('App.js pahoSetup: manifoldId =', manifoldId);
+      console.log('App.js pahoSetup: valveId =', valveId);
+      console.log('App.js pahoSetup: update =', update);
       this.updateValve(manifoldId, valveId, update);
     };
 
@@ -88,25 +94,25 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.updateValve(9, 0, {
+    this.updateValve(42, 0, {
       cycles: 1000,
       fault: false,
       leak: false,
       pressure: false
     });
-    this.updateValve(9, 1, {
+    this.updateValve(42, 1, {
       cycles: 999,
       fault: false,
       leak: true,
       pressure: false
     });
-    this.updateValve(9, 4, {
+    this.updateValve(42, 4, {
       cycles: 998,
       fault: true,
       leak: false,
       pressure: false
     });
-    this.updateValve(9, 5, {
+    this.updateValve(42, 5, {
       cycles: 997,
       fault: false,
       leak: false,

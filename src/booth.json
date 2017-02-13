@@ -34,8 +34,8 @@
         [0, 0],
         [0, 91],
         [21, 91],
-        [21, 30],
-        [61, 30],
+        [21, 32],
+        [61, 32],
         [61, 0]
       ]
     }
@@ -75,16 +75,16 @@
     },
     {
       "stationId": 1,
-      "manifoldId": 9,
+      "manifoldId": 42,
       "horizontal": false,
-      "location": {"x": 32, "y": 4},
+      "location": {"x": 32, "y": 2},
       "valveIds": [1000, 1001, 0, 0, 1004, 1005]
     },
     {
       "stationId": 2,
       "manifoldId": 10,
       "horizontal": false,
-      "location": {"x": 155, "y": 4},
+      "location": {"x": 155, "y": 2},
       "valveIds": [2000, 2001, 0, 0, 2004, 2005]
     },
     {
@@ -92,7 +92,7 @@
       "manifoldId": 11,
       "horizontal": true,
       "angle": -45,
-      "location": {"x": 27, "y": 144},
+      "location": {"x": 44, "y": 161},
       "valveIds": [3000]
     },
     {
@@ -100,27 +100,35 @@
       "manifoldId": 12,
       "horizontal": true,
       "angle": 45,
-      "location": {"x": 169, "y": 145},
-      "valveIds": [4000, 4001]
+      "location": {"x": 158, "y": 161},
+      "valveIds": [4000]
     },
     {
-      "id": 13,
+      "stationId": 4,
+      "manifoldId": 13,
+      "horizontal": true,
+      "angle": 45,
+      "location": {"x": 190, "y": 128},
+      "valveIds": [0]
+    },
+    {
+      "id": 14,
       "text": "Smart Factory Zone",
       "location": {"x": 30, "y": -4}
     },
     {
-      "id": 14,
+      "id": 15,
       "text": "Smart Machines Zone",
       "location": {"x": 174, "y": -4}
     },
     {
-      "id": 15,
+      "id": 16,
       "text": "Energy Efficiency\nBi-directional Actuation Zone",
       "location": {"x": 43, "y": 139},
       "angle": -45
     },
     {
-      "id": 16,
+      "id": 17,
       "text": "Energy Efficiency\nUnidirectional Actuation Zone",
       "location": {"x": 161, "y": 139},
       "angle": 45
