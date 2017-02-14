@@ -73,9 +73,7 @@ class App extends Component {
         field === 'LifeCycleCount' ? bytesToNumber(payloadBytes) :
         null;
       const update = {[prop]: value};
-      console.log('App.js pahoSetup: manifoldId =', manifoldId);
-      console.log('App.js pahoSetup: valveId =', valveId);
-      console.log('App.js pahoSetup: update =', update);
+      console.log('manifold', manifoldId, 'valve', valveId, update);
       this.updateValve(manifoldId, valveId, update);
     };
 
