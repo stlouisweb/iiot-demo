@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import Tabs from './tabs';
 import './App.css';
 import '../lib/mqttws31';
+const config = require('../public/config.json');
 /* global Paho */
-
-const MQTT_IP = '10.201.200.60';
-const MQTT_PORT = 9001;
 
 let dirty = false;
 const manifolds = {};
@@ -38,7 +36,7 @@ class App extends Component {
 
   pahoSetup() {
     const clientId = `id${Date.now()}`;
-    const client = new Paho.MQTT.Client(MQTT_IP, MQTT_PORT, clientId);
+    const client = new Paho.MQTT.Client(config.ip, config.port, clientId);
 
     client.onMessageArrived = message => {
       const topic = message.destinationName;
