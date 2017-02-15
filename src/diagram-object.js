@@ -75,13 +75,16 @@ class DiagramObject extends Component {
               valveHasAnyFault(limits, valve) ? 'any-fault' :
               'no-fault';
 
+            const handlers = valveId === -1 ? {} :
+              {onClick: this.onValveClick};
+
             return (
               <polygon
                 className={`valve ${otherClass}`}
                 id={polygonId}
                 key={polygonId}
-                onClick={this.onValveClick}
                 points={valvePolygons[index]}
+                {...handlers}
               />
             );
           })
@@ -126,7 +129,9 @@ class DiagramObject extends Component {
 
     const {manifolds} = this.props;
     const manifold = manifolds[manifoldId];
-    const valve = manifold[valveId];
+    const valve = manifold ?
+      manifold[valveId] :
+      {manifoldId, valveId};
     React.setState(() => ({selectedValve: valve}));
   };
 

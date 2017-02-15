@@ -10,16 +10,16 @@ export function manifoldHasSpecificFault(limits, faultType, manifold) {
 export function valveHasAnyFault(limits, valve) {
   return !valve ? false :
     valve.fault ||
-    valve.leak ||
+    valve.leakFault ||
     valve.cycles > limits.cycles ||
-    valve.pressure;
+    valve.pressureFault;
 }
 
 export function valveHasSpecificFault(limits, faultType, valve) {
   return !valve ? false :
-    faultType === 'leak-fault' ? valve.leak :
+    faultType === 'leak-fault' ? valve.leakFault :
     faultType === 'lifecycle' ? valve.cycles > limits.cycles :
-    faultType === 'pressure-fault' ? valve.pressure :
+    faultType === 'pressure-fault' ? valve.pressureFault :
     faultType === 'valve-fault' ? valve.fault :
     false;
 }

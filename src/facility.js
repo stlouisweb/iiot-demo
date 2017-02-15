@@ -10,7 +10,7 @@ export const alertType = t.arrayOf(t.shape({
 
 const Facility = ({alerts, onAlertClick}) =>
   <div className="facility">
-    <img alt="facility floor plan" src="images/floorplan.png"/>
+    <img alt="facility floor plan" src="../images/floorplan.png"/>
     <svg className="facility-alert" viewBox="0 0 720 600">
       {
         alerts.map(({id, x, y}, index) =>

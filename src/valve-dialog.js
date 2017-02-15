@@ -3,21 +3,11 @@ import Dialog from './dialog';
 import {valveHasSpecificFault} from './faults';
 import {LineChart, Themes} from 'formidable-charts';
 
-function getChartSeries() {
-  const SERIES_COUNT = 3;
-  const DATA_POINTS = 10;
-  const MAX_Y = 30;
-
-  const chartSeries = [];
-  for (let seriesNumber = 0; seriesNumber < SERIES_COUNT; seriesNumber++) {
-    const data = [];
-    for (let x = 0; x < DATA_POINTS; x++) {
-      data.push({x, y: Math.random() * MAX_Y});
-    }
-    chartSeries.push({data});
-  }
-
-  return chartSeries;
+function getChartSeries(pressures) {
+  const data = pressures ?
+    pressures.map((pressure, index) => ({x: index, y: pressure})) :
+    [];
+  return [{data}];
 }
 
 function getCssClass(bool) {
@@ -40,9 +30,9 @@ class ValveDialog extends Component {
       valveHasSpecificFault(limits, 'lifecycle', valve);
 
     const pairs = [
-      {label: 'Station #', property: 'stationId'},
       {label: 'Manifold Serial #', property: 'manifoldId'},
-      {label: 'Valve Serial #', property: 'valveId'},
+      {label: 'Station #', property: 'stationNumber'},
+      {label: 'Valve Serial #', property: 'valveSerialId'},
       {
         label: 'Valve Fault',
         property: 'fault',
@@ -50,25 +40,27 @@ class ValveDialog extends Component {
       },
       {
         label: 'Leak Fault',
-        property: 'leak',
-        className: getCssClass(valve.leak)
+        property: 'leakFault',
+        className: getCssClass(valve.leakFault)
       },
       {
         label: 'Pressure Fault',
-        property: 'pressure',
-        className: getCssClass(valve.pressure)
+        property: 'pressureFault',
+        className: getCssClass(valve.pressureFault)
       },
       {
         label: 'Lifecycle Count',
         property: 'cycles',
         className: getCssClass(valve.lifecycleFault)
       },
-      //{label: 'Supply Pressure', property: 'pressure'},
-      {label: 'Duration Last 1-4', property: 'duration14'},
-      {label: 'Duration Last 1-2', property: 'duration12'},
+      {label: 'Supply Pressure', property: 'pressure'},
+      /*
+      {label: 'Duration Last 1-4', property: 'durationLast14'},
+      {label: 'Duration Last 1-2', property: 'durationLast12'},
       {label: 'Equalization Avg. Pressure', property: 'eqAvgPressure'},
       {label: 'Equalization Pressure Rate', property: 'eqPressureRate'},
       {label: 'Residual Dynamic Analysis', property: 'resDynAnalysis'}
+      */
     ];
     const dialogButtons = [
       {label: 'OK', onClick: this.closeDialog}
@@ -88,7 +80,7 @@ class ValveDialog extends Component {
         onClose={this.closeDialog}
         show={valve !== null}
         size="small"
-        title={`Manifold ${valve.manifoldId} Valve ${valve.valveId}`}
+        title={`Manifold ${valve.manifoldId} Valve ${valve.stationNumber}`}
       >
         {
           pairs.map((pair, index) =>
@@ -101,8 +93,16 @@ class ValveDialog extends Component {
               </div>
             </div>)
         }
-
-        <LineChart series={getChartSeries()} theme={Themes.dark} x="x" y="y"/>
+        {
+          valve.pressures ?
+            <LineChart
+              series={getChartSeries(valve.pressures)}
+              theme={Themes.dark}
+              x="x"
+              y="y"
+            /> :
+            null
+        }
       </Dialog>
     );
   }
