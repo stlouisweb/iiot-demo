@@ -72,7 +72,7 @@ class App extends Component {
 
       if (deviceType !== 'manifold') return;
 
-      console.log(`App.js x: field = "${field}"`);
+      //console.log(`App.js x: field = "${field}"`);
       const prop =
         field === 'DurationOfLast1_2Signal' ? 'durationLast12' :
         field === 'DurationOfLast1_4Signal' ? 'durationLast14' :
@@ -91,7 +91,7 @@ class App extends Component {
 
       const value = getValue(
         field, message.payloadString, message.payloadBytes);
-      //console.log('App.js pahoSetup: value =', value);
+      console.log('topic:', topic, 'value:', value);
 
       const update = {[prop]: value};
       //console.log('manifold', manifoldId, 'valve', stationNumber, update);
