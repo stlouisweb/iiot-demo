@@ -182,15 +182,6 @@ class App extends Component {
           selectedValve={selectedValve}
         />
         <img alt="OCI logo" className="oci-logo" src="../images/oci-logo.png"/>
-        {
-          selectedTab === 'facility' ?
-            null :
-            <img
-              alt="nexmatix logo"
-              className="logo"
-              src="../images/logo.png"
-            />
-        }
       </div>
     );
   }

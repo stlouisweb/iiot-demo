@@ -2,6 +2,12 @@
   "width": 205,
   "height": 184,
   "definitions": {
+    "logo": {
+      "type": "image",
+      "height": 56,
+      "width": 100,
+      "ref": "images/logo.svg"
+    },
     "booth": {
       "type": "polygon",
       "points": [
@@ -61,6 +67,11 @@
       "defId": "bench2",
       "flipY": true,
       "location": {"x": 144, "y": 0}
+    },
+    {
+      "id": 15,
+      "defId": "logo",
+      "location": {"x": 54, "y": 75}
     },
     {
       "stationId": 1,
