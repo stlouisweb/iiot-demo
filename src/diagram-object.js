@@ -76,7 +76,10 @@ class DiagramObject extends Component {
               'no-fault';
 
             const handlers = valveId === -1 ? {} :
-              {onClick: this.onValveClick};
+              {
+                onClick: this.onValveClick,
+                onTouchEnd: this.onValveClick
+              };
 
             return (
               <polygon

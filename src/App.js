@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import Tabs from './tabs';
 import './App.css';
 import '../lib/mqttws31';
-//const config = require('../public/config.json');
-const config = {ip: '192.168.3.10', port: 9001};
+const config = require('../public/config.json');
+//const config = {ip: '192.168.3.10', port: 9001};
 console.log('App.js: config =', config);
 /* global Paho */
 
@@ -33,6 +33,7 @@ function isBytes(field) {
     'EqualizationPressureRate',
     'LifeCycleCount',
     'ManifoldSerialNumber',
+    'PressurePoint',
     'ResidualOfDynamicAnalysis',
     'SupplyPressure',
     'ValveSerialNumber'
@@ -105,8 +106,9 @@ class App extends Component {
         field === 'LifeCycleCount' ? 'cycles' :
         field === 'PartNumber' ? 'partNumber' :
         field === 'PressureFault' ? 'pressureFault' :
+        field === 'PressurePoint' ? 'pressure' :
         field === 'StationNumber' ? 'station' :
-        field === 'SupplyPressure' ? 'pressure' :
+        //field === 'SupplyPressure' ? '?' :
         field === 'ValveFault' ? 'fault' :
         field === 'ValueFault' ? 'fault' : // note typo in field name
         field === 'ValveSerialNumber' ? 'valveSerialId' :
