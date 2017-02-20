@@ -33,6 +33,7 @@ class ValveDialog extends Component {
       {label: 'Manifold Serial #', property: 'manifoldId'},
       {label: 'Station #', property: 'stationNumber'},
       {label: 'Valve Serial #', property: 'valveSerialId'},
+      {label: 'Part #', property: 'partNumber'},
       {
         label: 'Valve Fault',
         property: 'fault',

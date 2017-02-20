@@ -185,8 +185,7 @@
 .valve-dialog {
   .dialog-value {
     display: inline-block;
-    text-align: right;
-    width: 70px;
+    width: 130px;
   }
 
   .fault {
@@ -194,7 +193,8 @@
   }
 
   label {
-    width: 195px;
+    vertical-align: top;
+    width: 130px;
   }
 
   .modal-dialog {
