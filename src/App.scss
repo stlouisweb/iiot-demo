@@ -52,7 +52,15 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: center;
+
+    > .nexmatix-logo {
+      margin-bottom: 20px;
+      width: 200px;
+    }
+
+    button {
+      margin: 10px auto;
+    }
   }
 
   > .logo {
@@ -72,7 +80,7 @@
   .number-input {
     display: inline-block;
     margin: 2px 0 2px 5px;
-    width: 85px;
+    width: 100px;
   }
 
   .polygon {

@@ -38,6 +38,7 @@ class Filters extends Component {
 
     return (
       <div className="filters">
+        <img alt="Nexmatix logo" className="nexmatix-logo" src="../images/logo.png" />
         <button
           className={`toggle-btn ${this.cssClasses('leak-fault')}`}
           id="leak-fault"

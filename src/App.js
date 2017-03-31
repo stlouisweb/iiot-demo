@@ -69,8 +69,8 @@ class App extends Component {
     React.setState = this.setState.bind(this);
 
     this.state = {
-      alerts: [{id: 1, x: 610, y: 380}],
-      limits: {cycles: 1000},
+      alerts: [{id: 1, x: 428, y: 395}],
+      limits: {cycles: 1000000},
       filter: 'leak-fault',
       manifolds,
       selectedTab: 'department',
