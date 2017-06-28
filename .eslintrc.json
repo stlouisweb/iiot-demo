@@ -136,7 +136,7 @@
     "lines-around-comment": "off",
     "lines-around-directive": "off",
     "max-depth": ["warn", 5],
-    "max-len": ["warn", 80, 4],
+    "max-len": ["warn", 140, 4],
     "max-lines": "off",
     "max-nested-callbacks": ["error", 4],
     "max-params": "off",
@@ -322,10 +322,10 @@
     "react/jsx-no-undef": "error",
     "react/jsx-pascal-case": "error",
     "react/jsx-sort-props": "off",
-    "react/jsx-space-before-closing": ["warning", "always"],
+    "react/jsx-space-before-closing": [1, "always"],
     "react/jsx-tag-spacing": ["error", {
       "afterOpening": "never",
-      "beforeSelfClosing": "never",
+      "beforeSelfClosing": "always",
       "closingSlash": "never"
     }],
     "react/jsx-uses-react": "error",

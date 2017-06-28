@@ -15,14 +15,12 @@ let dirty = false;
 function bytesToNumber(buffer) {
   const bytes = new Uint8Array(buffer);
   const len = bytes.length;
-  return bytes.reduce(
-    (result, byte, index) => result + byte * Math.pow(256, len - index - 1),
-    0
-  );
+
+  return bytes.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
 }
 
 function isBoolean(field) {
-  return ['LeakFault', 'ValueFault', 'ValveFault'].includes(field);
+  return ['LeakFault', 'ValueFault', 'ValveFault', 'DataFault'].includes(field);
 }
 
 function isBytes(field) {
@@ -41,13 +39,13 @@ function isBytes(field) {
 }
 
 function isText(field) {
-  return [
-    'PartNumber',
-  ].includes(field);
+  return ['PartNumber'].includes(field);
 }
 
 function getValue(field, message) {
   //console.log('App.js getValue: field =', field);
+  // console.log('field', field);
+  // console.log('message', message);
   if (isBoolean(field)) {
     return message.payloadString === 'True';
   } else if (isBytes(field)) {
@@ -57,9 +55,8 @@ function getValue(field, message) {
   } else if (field === 'PressureFault') {
     const string = message.payloadString;
     return string === 'Low' || string === 'High';
-  } else {
-    return null;
   }
+  return null;
 }
 
 class App extends Component {
@@ -84,8 +81,10 @@ class App extends Component {
 
     let client;
 
-    function onConnectionLost() {
+    function onConnectionLost(errorCode, errorMessage) {
       console.log('Paho connection lost, reconnecting ...');
+      console.log('errorCode', errorCode);
+      console.log('errorMessage', errorMessage);
       connect();
     }
 
@@ -132,7 +131,8 @@ class App extends Component {
       client.onMessageArrived = onMessageArrived;
 
       // Documentation on the message object is at
-      // https://www.eclipse.org/paho/files/jsdoc/symbols/Paho.MQTT.Message.html#duplicate
+      // https://www.eclipse.org/paho/files/jsdoc/symbols/Paho.MQTT.Message.html
+      // #duplicate
       client.connect({
         onSuccess: () => {
           console.log('got new connection');
@@ -147,15 +147,12 @@ class App extends Component {
   componentDidMount() {
     this.pahoSetup();
 
-    setInterval(
-      () => {
-        if (dirty) {
-          dirty = false;
-          this.setState({manifolds});
-        }
-      },
-      500
-    );
+    setInterval(() => {
+      if (dirty) {
+        dirty = false;
+        this.setState({manifolds});
+      }
+    }, 500);
   }
 
   updateValve(manifoldId, stationNumber, changes) {
@@ -189,14 +186,7 @@ class App extends Component {
   }
 
   render() {
-    const {
-      alerts,
-      filter,
-      limits,
-      manifolds,
-      selectedTab,
-      selectedValve
-    } = this.state;
+    const {alerts, filter, limits, manifolds, selectedTab, selectedValve} = this.state;
     return (
       <div className="app">
         <Tabs
