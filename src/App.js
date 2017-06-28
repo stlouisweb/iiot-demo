@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Tabs from './tabs';
 import './App.css';
 import '../lib/mqttws31';
+import { Int64BE } from 'int64-buffer';
 const config = require('../public/config.json');
 //const config = {ip: '192.168.3.10', port: 9001};
 console.log('App.js: config =', config);
@@ -51,8 +52,24 @@ function getValue(field, message) {
   if (isBoolean(field)) {
     return message.payloadString === 'True';
   } else if (isBytes(field)) {
+		console.log(message.destinationName.includes('ValveSerialNumber'));
+		// if (message.destinationName.includes('ValveSerialNumber')) {
+		// 	var msgBuffer = Buffer.from(message.payloadBytes);
+		// 	var value = msgBuffer.slice(8, 12)
+		// 	return (value.readIntBE(0,4));
+		// }
+		if (message.payloadBytes.length === 12) {
+			var msgBuffer = Buffer.from(message.payloadBytes);
+			var value = msgBuffer.slice(8, 12)
+			return (value.readIntBE(0,4));
+		}
     return bytesToNumber(message.payloadBytes);
   } else if (isText(field)) {
+		console.log("length ", message.payloadString.length)
+		if (message.destinationName.includes("PartNumber")) {
+			console.log("length ", message.payloadString.length)
+			return message.payloadString.slice(4, message.payloadString.length)
+		}
     return message.payloadString;
   } else if (field === 'PressureFault') {
     const string = message.payloadString;
@@ -92,8 +109,20 @@ class App extends Component {
     const that = this;
     function onMessageArrived(message) {
       const topic = message.destinationName;
+		/*	console.log(message)
       //console.log('App.js onMessageArrived: topic =', topic);
+			var msgBuffer = Buffer.from(message.payloadBytes);
+			console.log(message.payloadBytes);
 
+			//console.log(msgBuffer.length);
+			var val = msgBuffer.slice(8, 12);
+			console.log(val)
+			console.log("time: " + msgBuffer.readIntBE(0, 8) + " value " + val.readIntBE(0,4));
+			console.log(val.readIntBE(0,4));
+			var ts = msgBuffer.slice(0, 8)
+			var big = new Int64BE(ts);
+			console.log(big.toString()); */
+			//console.log(msgBuffer.readIntLE(9, msgBuffer.length));
       const [deviceType, manifoldId, stationNumber, field] = topic.split('/');
 
       if (deviceType !== 'manifold') return;
