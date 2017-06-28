@@ -90,13 +90,12 @@ class App extends Component {
 
     const that = this;
     function onMessageArrived(message) {
+      console.log('Inside onMessageArrived');
+      console.log('MESSAGE', message);
       const topic = message.destinationName;
       //console.log('App.js onMessageArrived: topic =', topic);
-
       const [deviceType, manifoldId, stationNumber, field] = topic.split('/');
-
       if (deviceType !== 'manifold') return;
-
       //console.log(`App.js x: field = "${field}"`);
       const prop =
         //field === 'DurationOfLast1_2Signal' ? 'durationLast12' :
@@ -116,9 +115,13 @@ class App extends Component {
 
       // If the field in the message is not one we care about ...
       if (!prop) return;
+      // @TODO parse messages.
+      // At this point a message has been recieved from the message broker
+      // and we have parsed the topic, deviceType, manifoldId, stationNumber, field and property from that message
+      // So now we need to obtain the value and the timestamp from the message payloadString
+      // and update the application's state accordingly.
 
       const value = getValue(field, message);
-
       const update = {[prop]: value};
       //console.log('manifold', manifoldId, 'valve', stationNumber, update);
       that.updateValve(manifoldId, stationNumber, update);
