@@ -46,12 +46,13 @@ function getValue(field, message) {
   //console.log('App.js getValue: field =', field);
   // console.log('field', field);
   // console.log('message', message);
+  const buffer = new Buffer(message.payloadBytes);
   if (isBoolean(field)) {
     return message.payloadString === 'True';
   } else if (isBytes(field)) {
-    return bytesToNumber(message.payloadBytes);
+    return bytesToNumber(buffer.slice(8, buffer.length));
   } else if (isText(field)) {
-    return message.payloadString;
+    return buffer.toString('utf-8', 8, buffer.length);
   } else if (field === 'PressureFault') {
     const string = message.payloadString;
     return string === 'Low' || string === 'High';
@@ -90,8 +91,6 @@ class App extends Component {
 
     const that = this;
     function onMessageArrived(message) {
-      console.log('Inside onMessageArrived');
-      console.log('MESSAGE', message);
       const topic = message.destinationName;
       //console.log('App.js onMessageArrived: topic =', topic);
       const [deviceType, manifoldId, stationNumber, field] = topic.split('/');
