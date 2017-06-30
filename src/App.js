@@ -14,12 +14,10 @@ let dirty = false;
 
 function bytesToNumber(buffer) {
 //  const bytes = new Uint8Array(buffer);
-  const bytes = new Buffer(buffer);
+  const bytes = new Uint8Array(buffer);
   const len = bytes.length;
 
-  const num = bytes.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
-  
-  return num;
+    return bytes.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
 }
 
 function isBoolean(field) {
