@@ -11,12 +11,50 @@ console.log('App.js: config =', config);
 const MAX_PRESSURES = 25;
 const manifolds = {};
 let dirty = false;
-
+function buf2hex(buffer) {
+  return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+}
 function bytesToNumber(buffer) {
-  const bytes = new Uint8Array(buffer);
+//  const bytes = new Uint8Array(buffer);
+  const bytes = new Buffer(buffer);
+  const hex = buf2hex(bytes);
   const len = bytes.length;
 
-  return bytes.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
+  const highInt = hex >> 8;
+  const lowInt = hex;
+
+  console.log(highInt); // 0xfff
+  console.log(lowInt); // 0xfff
+
+  // set them together again
+  const reBigInt = (highInt << 8) + lowInt;
+  console.log(reBigInt);
+  if (len === 8) {
+    console.log('bytes', bytes);
+    const first = bytes.slice(0, 4);
+    console.log('first', first);
+    const last = bytes.slice(4, 8);
+    console.log('last', last);
+    const firstNum = first.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
+    const lastNum = last.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
+    console.log('firstn', firstNum);
+    console.log('lastn', lastNum);
+  }
+  const num = bytes.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
+  let int = buffer[0];
+
+  for (let i = 0; i < buffer.length; i++) {
+    int += (buffer[i] * Math.pow(2, 4 * i));
+  }
+  if (buffer.length > 4) {
+    const bufInt = (buffer.readUInt32LE(0) << 32) + buffer.readUInt32LE(3);
+    console.log(bufInt);
+  }
+
+  console.log(int);
+
+  debugger;
+  return num;
 }
 
 function isBoolean(field) {
@@ -50,6 +88,8 @@ function getValue(field, message) {
   if (isBoolean(field)) {
     return message.payloadString === 'True';
   } else if (isBytes(field)) {
+    console.log('timestamp buffer', buffer.slice(0, 8));
+    console.log('timestamp conv', bytesToNumber(buffer.slice(0, 8)));
     return bytesToNumber(buffer.slice(8, buffer.length));
   } else if (isText(field)) {
     return buffer.toString('utf-8', 8, buffer.length);
