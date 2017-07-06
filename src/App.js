@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Tabs from './tabs';
 import './App.css';
 import '../lib/mqttws31';
+import {Int64BE} from 'int64-buffer';
 const config = require('../public/config.json');
 //const config = {ip: '192.168.3.10', port: 9001};
 console.log('App.js: config =', config);
@@ -12,15 +13,16 @@ const manifolds = {};
 let dirty = false;
 
 function bytesToNumber(buffer) {
-//  const bytes = new Uint8Array(buffer);
   const bytes = new Uint8Array(buffer);
   const len = bytes.length;
-
-    return bytes.reduce((result, byte, index) => result + byte * Math.pow(256, len - index - 1), 0);
+  return bytes.reduce(
+    (result, byte, index) => result + byte * Math.pow(256, len - index - 1),
+    0
+  );
 }
 
 function isBoolean(field) {
-  return ['LeakFault', 'ValueFault', 'ValveFault', 'DataFault'].includes(field);
+  return ['LeakFault', 'ValueFault', 'ValveFault'].includes(field);
 }
 
 function isBytes(field) {
@@ -39,23 +41,17 @@ function isBytes(field) {
 }
 
 function isText(field) {
-  return ['PartNumber'].includes(field);
+  return [
+    'PartNumber',
+  ].includes(field);
 }
 
 function getValue(field, message) {
   const buffer = new Buffer(message.payloadBytes);
   //console.log('App.js getValue: field =', field);
-  // console.log('field', field);
-  // console.log('message', message);
-  const buffer = new Buffer(message.payloadBytes);
   if (isBoolean(field)) {
     return message.payloadString === 'True';
   } else if (isBytes(field)) {
-<<<<<<< HEAD
-    console.log('timestamp buffer', buffer.slice(0, 8));
-    console.log('timestamp conv', bytesToNumber(buffer.slice(0, 8)));
-=======
->>>>>>> update-valve-message
     return bytesToNumber(buffer.slice(8, buffer.length));
   } else if (isText(field)) {
     return buffer.toString('utf-8', 8, buffer.length);
@@ -64,10 +60,7 @@ function getValue(field, message) {
     return string === 'Low' || string === 'High';
   }
   return null;
-<<<<<<< HEAD
-=======
 
->>>>>>> update-valve-message
 }
 
 class App extends Component {
@@ -92,19 +85,32 @@ class App extends Component {
 
     let client;
 
-    function onConnectionLost(errorCode, errorMessage) {
+    function onConnectionLost() {
       console.log('Paho connection lost, reconnecting ...');
-      console.log('errorCode', errorCode);
-      console.log('errorMessage', errorMessage);
       connect();
     }
 
     const that = this;
     function onMessageArrived(message) {
       const topic = message.destinationName;
+      /*	console.log(message)
       //console.log('App.js onMessageArrived: topic =', topic);
+			var msgBuffer = Buffer.from(message.payloadBytes);
+			console.log(message.payloadBytes);
+
+			//console.log(msgBuffer.length);
+			var val = msgBuffer.slice(8, 12);
+			console.log(val)
+			console.log("time: " + msgBuffer.readIntBE(0, 8) + " value " + val.readIntBE(0,4));
+			console.log(val.readIntBE(0,4));
+			var ts = msgBuffer.slice(0, 8)
+			var big = new Int64BE(ts);
+			console.log(big.toString()); */
+      //console.log(msgBuffer.readIntLE(9, msgBuffer.length));
       const [deviceType, manifoldId, stationNumber, field] = topic.split('/');
+
       if (deviceType !== 'manifold') return;
+
       //console.log(`App.js x: field = "${field}"`);
       const prop =
         //field === 'DurationOfLast1_2Signal' ? 'durationLast12' :
@@ -124,13 +130,9 @@ class App extends Component {
 
       // If the field in the message is not one we care about ...
       if (!prop) return;
-      // @TODO parse messages.
-      // At this point a message has been recieved from the message broker
-      // and we have parsed the topic, deviceType, manifoldId, stationNumber, field and property from that message
-      // So now we need to obtain the value and the timestamp from the message payloadString
-      // and update the application's state accordingly.
 
       const value = getValue(field, message);
+
       const update = {[prop]: value};
       //console.log('manifold', manifoldId, 'valve', stationNumber, update);
       that.updateValve(manifoldId, stationNumber, update);
@@ -159,12 +161,15 @@ class App extends Component {
   componentDidMount() {
     this.pahoSetup();
 
-    setInterval(() => {
-      if (dirty) {
-        dirty = false;
-        this.setState({manifolds});
-      }
-    }, 500);
+    setInterval(
+      () => {
+        if (dirty) {
+          dirty = false;
+          this.setState({manifolds});
+        }
+      },
+      500
+    );
   }
 
   updateValve(manifoldId, stationNumber, changes) {
@@ -199,7 +204,14 @@ class App extends Component {
   }
 
   render() {
-    const {alerts, filter, limits, manifolds, selectedTab, selectedValve} = this.state;
+    const {
+      alerts,
+      filter,
+      limits,
+      manifolds,
+      selectedTab,
+      selectedValve
+    } = this.state;
     return (
       <div className="app">
         <Tabs
