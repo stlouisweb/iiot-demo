@@ -131,8 +131,13 @@ class App extends Component {
       client.onConnectionLost = onConnectionLost;
       client.onMessageArrived = onMessageArrived;
 
+      /* eslint-disable */
+
       // Documentation on the message object is at
       // https://www.eclipse.org/paho/files/jsdoc/symbols/Paho.MQTT.Message.html#duplicate
+
+      /* eslint-enable */
+
       client.connect({
         onSuccess: () => {
           console.log('got new connection');
