@@ -7,7 +7,6 @@ const config = require('../public/config.json');
 //const config = {ip: '192.168.3.10', port: 9001};
 console.log('App.js: config =', config);
 /* global Paho */
-
 const MAX_PRESSURES = 25;
 const manifolds = {};
 let dirty = false;
@@ -47,19 +46,20 @@ function isText(field) {
 }
 
 function getValue(field, message) {
+  const buffer = new Buffer(message.payloadBytes);
   //console.log('App.js getValue: field =', field);
   if (isBoolean(field)) {
     return message.payloadString === 'True';
   } else if (isBytes(field)) {
-    return bytesToNumber(message.payloadBytes);
+    return bytesToNumber(buffer.slice(8, buffer.length));
   } else if (isText(field)) {
-    return message.payloadString;
+    return buffer.toString('utf-8', 8, buffer.length);
   } else if (field === 'PressureFault') {
     const string = message.payloadString;
     return string === 'Low' || string === 'High';
-  } else {
-    return null;
   }
+  return null;
+
 }
 
 class App extends Component {
@@ -103,16 +103,16 @@ class App extends Component {
         //field === 'DurationOfLast1_2Signal' ? 'durationLast12' :
         //field === 'DurationOfLast1_4Signal' ? 'durationLast14' :
         field === 'LeakFault' ? 'leakFault' :
-        field === 'LifeCycleCount' ? 'cycles' :
-        field === 'PartNumber' ? 'partNumber' :
-        field === 'PressureFault' ? 'pressureFault' :
-        field === 'PressurePoint' ? 'pressure' :
-        field === 'StationNumber' ? 'station' :
+          field === 'LifeCycleCount' ? 'cycles' :
+            field === 'PartNumber' ? 'partNumber' :
+              field === 'PressureFault' ? 'pressureFault' :
+                field === 'PressurePoint' ? 'pressure' :
+                  field === 'StationNumber' ? 'station' :
         //field === 'SupplyPressure' ? '?' :
-        field === 'ValveFault' ? 'fault' :
-        field === 'ValueFault' ? 'fault' : // note typo in field name
-        field === 'ValveSerialNumber' ? 'valveSerialId' :
-        null;
+                    field === 'ValveFault' ? 'fault' :
+                      field === 'ValueFault' ? 'fault' : // typo in field name
+                        field === 'ValveSerialNumber' ? 'valveSerialId' :
+                          null;
       //console.log('App.js pahoSetup: prop =', prop);
 
       // If the field in the message is not one we care about ...
@@ -132,7 +132,8 @@ class App extends Component {
       client.onMessageArrived = onMessageArrived;
 
       // Documentation on the message object is at
-      // https://www.eclipse.org/paho/files/jsdoc/symbols/Paho.MQTT.Message.html#duplicate
+      // https://www.eclipse.org/paho/files/jsdoc/symbols/Paho.MQTT.Message.html
+      // #duplicate
       client.connect({
         onSuccess: () => {
           console.log('got new connection');
@@ -183,7 +184,8 @@ class App extends Component {
 
     // Update the data for the valve.
     valves[stationNumber] = Object.assign(valve, changes);
-    //console.log('App.js updateValve: valves[stationNumber] =', valves[stationNumber]);
+    //console.log('App.js updateValve: valves[stationNumber] =',
+    // valves[stationNumber]);
 
     dirty = true;
   }
